@@ -14,7 +14,10 @@ const PhotoUploader = (props) => {
     const checkInput = (e) => {
         const {files, accept} = e.target;
         const file = files.length > 0 && files[0];
-        setValidationResult(getPhotoInputValidationResult(file, accept));
+        
+        const validationResult = getPhotoInputValidationResult(file, accept);
+        setValidationResult(validationResult);
+        validationResult.isValid && props.handlePhotoUpload(file);
     }
 
     const getPhotoInputValidationResult = (file, accept) => {
@@ -35,13 +38,13 @@ const PhotoUploader = (props) => {
         return {isValid: true, message: ''}
     }
 
-    if (!validationResult.isValid) {
+    if (!validationResult.isValid) { // todo: make this happen only when validationResult changes (no re-render)
         alert(validationResult.message);
     }
 
     return (
         <UploderWrapper>
-            F<label htmlFor="file">Upload a photo:
+            <label htmlFor="file">Upload a photo:
                 <input
                     className="user-file"
                     id="file"

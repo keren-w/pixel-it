@@ -1,14 +1,14 @@
 import {connect} from 'react-redux';
 import PhotoUploader from './PhotoUploader'
-import {nameEntered} from "../data/actions";
-import {getNameEntered} from "../data/selectors";
+import {handlePhotoUploaded} from "../../PhotoViewer/data/actions";
+// import {getPhotoName} from "../../PhotoViewer/data/selectors";
 
 const mapStateToProps = (state) => ({
-    name: getNameEntered(state),
+    // name: getPhotoName(state),
 });
 
 const mapDispatchToProps = ({
-    nameEntered,
+    handlePhotoUpload: handlePhotoUploaded,
 });
 
 const PhotoUploaderContainer = connect(
