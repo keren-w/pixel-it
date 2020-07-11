@@ -44,10 +44,10 @@ const PhotoUploader = (props) => {
 
     return (
         <UploderWrapper>
-            <label htmlFor="file">Upload a photo:
+            <label htmlFor="file">Upload a photo
                 <input
                     className="user-file"
-                    id="file"
+                    id="photo-input"
                     type="file"
                     accept="image/jpeg"
                     onInput={checkInput}/>
@@ -61,4 +61,23 @@ export default PhotoUploader;
 const UploderWrapper = styled.div `
     margin-top: 50px;
     width: 300px;
+
+    label {
+        position: relative;
+        font-size: 1.15em;  
+        color: white;
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 5px;
+        box-shadow: black 2px 2px 6px;
+    }
+    
+    #photo-input {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+    }
 `;
