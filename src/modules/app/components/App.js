@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from "styled-components";
 import Header from "../../Header/Header";
 import PhotoUploader from "../../PhotoUploader/components/PhotoUploaderContainer";
+import {Toaster} from "./Toaster";
 
-class App extends Component {
-  render() {
-    return (
-        <AppWrapper>
-          <Header/>
-          <PhotoUploader/>
-        </AppWrapper>
-    );
-  }
+const App = (props) => {
+  const {showToaster, toasterMessage, dismissToaster} = props;
+  return (
+    <AppWrapper>
+      <Header/>
+      <PhotoUploader/>
+      {showToaster && <Toaster message={toasterMessage} dismissToaster={dismissToaster}/>}
+    </AppWrapper>
+  );
 }
 
 export default App;
 
-const AppWrapper = styled.div`
+const AppWrapper = styled.div `
     background-color: #282c34;
     min-height: 100vh;
     display: flex;

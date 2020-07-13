@@ -21,7 +21,6 @@ export const details = (state = defaultState, action) => {
 export const file = (state = {}, action) => {
     switch (action.type) {
         case actions.HANDLE_PHOTO_UPLOADED:
-            console.log(action.payload);
             return action.payload;
         default:
             return state;

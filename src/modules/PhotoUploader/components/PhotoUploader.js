@@ -1,45 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-const DEFAULT_VALIDATION_RESULT = {
-    isValid: true,
-    message: ''
-};
+import {getPhotoInputValidationResult} from "../data/validator";
 
 const PhotoUploader = (props) => {
 
-    const [validationResult,
-        setValidationResult] = useState(DEFAULT_VALIDATION_RESULT);
-
     const checkInput = (e) => {
+        // console.count('checkInput');
         const {files, accept} = e.target;
         const file = files.length > 0 && files[0];
         
         const validationResult = getPhotoInputValidationResult(file, accept);
-        setValidationResult(validationResult);
-        validationResult.isValid && props.handlePhotoUpload(file);
-    }
-
-    const getPhotoInputValidationResult = (file, accept) => {
-        if (!file) {
-            return {isValid: false, message: 'No file selected'};
+        const {isValid, message} = validationResult;
+        
+        if (!isValid) {
+            props.setShowToaster(message);
+        } else {
+            props.handlePhotoUpload(file);
         }
-
-        if (file.type !== accept) {
-            //throw error wrong file type
-            return {isValid: false, message: `Please select only files of type ${accept}`}
-        }
-
-        if (file.size > 2097152) {
-            // throw error large file
-            return {isValid: false, message: 'please upload a file below 2 MB'};
-        }
-
-        return {isValid: true, message: ''}
-    }
-
-    if (!validationResult.isValid) { // todo: make this happen only when validationResult changes (no re-render)
-        alert(validationResult.message);
     }
 
     return (
@@ -70,6 +47,10 @@ const UploderWrapper = styled.div `
         padding: 5px 15px;
         border-radius: 5px;
         box-shadow: black 2px 2px 6px;
+
+        &:hover {
+            background-color: rgba(7,7,7,0.2);
+        }
     }
     
     #photo-input {
