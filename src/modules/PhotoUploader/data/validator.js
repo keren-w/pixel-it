@@ -1,7 +1,4 @@
 export const getPhotoInputValidationResult = (file, accept) => {
-    if (!file) {
-        return {isValid: false, message: 'No file selected'};
-    }
 
     if (file.type !== accept) {
         //throw error wrong file type

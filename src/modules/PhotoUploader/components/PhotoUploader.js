@@ -14,6 +14,7 @@ const PhotoUploader = (props) => {
 
         if (!isValid) {
             props.setShowToaster(message);
+            e.target.value = null; // nullify input so to revalidate onChange
 
         } else {
             props.handlePhotoUpload(file);
