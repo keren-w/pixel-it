@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
 import * as actions from './actions';
 
-export const file = (state = {}, action) => {
+const defaultState = {file: null, name: ''}
+
+export const file = (state = defaultState, action) => {
     switch (action.type) {
         case actions.HANDLE_PHOTO_UPLOADED:
-            return action.payload;
+            return {
+                ...state,
+                file: action.payload,
+                name: action.payload.name || defaultState.name
+            }
         default:
             return state;
     }

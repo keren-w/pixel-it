@@ -1,9 +1,10 @@
 import {connect} from 'react-redux';
 import PhotoViewer from './PhotoViewer';
-import {getPhotoName} from '../data/selectors';
+import {getPhotoName, getPhotoFile} from '../data/selectors';
 
 const mapStateToProps = (state) => ({
-    name: getPhotoName(state)
+    name: getPhotoName(state),
+    file: getPhotoFile(state)
 });
 
 const mapDispatchToProps = ({
