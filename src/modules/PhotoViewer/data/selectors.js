@@ -1,4 +1,4 @@
-const get = state => state.photo;
+const get = state => state.uploadedPhoto;
 
 export const getPhotoName = state => get(state).name;
 
