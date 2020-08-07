@@ -9,7 +9,6 @@ const imgSize = {
 
 const PhotoViewer = (props) => {
 		const {file} = props;
-		console.log("PhotoViewer -> file", file)
 		const canvasRef = useRef(null);
 
 		useEffect(() => {
@@ -21,42 +20,41 @@ const PhotoViewer = (props) => {
 								// resizeWidth: imgSize.height, resizeHeight: imgSize.width,
 								resizeQuality: 'high'
 						}).then(bitmapImg => {
-								console.log("-> img", bitmapImg)
 								const {height, width} = getDisplayedImageSize(bitmapImg, canvasElement);
-                console.log("PhotoViewer -> height, width", height, width)
-								ctx.drawImage(bitmapImg, 0, 0, width, height);
+								const centeredXPosition = canvasElement.offsetWidth/2 - width/2;
+								ctx.drawImage(bitmapImg, centeredXPosition, 0, width, height);
 						})
 				}
 		}, [file]);
 
 		const getDisplayedImageSize = (bitmapImg, canvasElement) => {
-			const {width, height} = bitmapImg;
-			const isPortaitOrientation = height >= width;
+				const {width, height} = bitmapImg;
+				const isPortaitOrientation = height >= width;
 
-			const canvasHeight = canvasElement.offsetHeight;
-			const canvasWidth = canvasElement.offsetWidth;
+				const canvasHeight = canvasElement.offsetHeight;
+				const canvasWidth = canvasElement.offsetWidth;
 
-			const scaledImageHeight = (canvasWidth/width)*height
-			const scaledimageWidth = (canvasHeight/height)*width
-			
-			const calculatedPortraitSize = {
-				height: canvasHeight,
-				width: scaledimageWidth
-			}
+				const scaledImageHeight = (canvasWidth / width) * height
+				const scaledimageWidth = (canvasHeight / height) * width
 
-			const calculatedLandscapeSize = {
-				height: scaledImageHeight,
-				width: canvasWidth
-			}
+				const calculatedPortraitSize = {
+						height: canvasHeight,
+						width: scaledimageWidth
+				}
 
-			if (isPortaitOrientation && scaledimageWidth > canvasWidth) {
-				return calculatedLandscapeSize;
-			}
+				const calculatedLandscapeSize = {
+						height: scaledImageHeight,
+						width: canvasWidth
+				}
 
-			if (!isPortaitOrientation && scaledImageHeight > canvasHeight) {
-				return calculatedPortraitSize;
-			}
-			return (isPortaitOrientation && calculatedPortraitSize) || calculatedLandscapeSize;
+				if (isPortaitOrientation && scaledimageWidth > canvasWidth) {
+						return calculatedLandscapeSize;
+				}
+
+				if (!isPortaitOrientation && scaledImageHeight > canvasHeight) {
+						return calculatedPortraitSize;
+				}
+				return (isPortaitOrientation && calculatedPortraitSize) || calculatedLandscapeSize;
 		}
 
 		return (
