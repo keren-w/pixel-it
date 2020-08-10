@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import {ButtonWrapper} from "../../common/styles";
 
 const Pixelizer = (props) => {
-		const [isActive,
-				setIsActive] = useState(false);
-				const {isHidden} = props;
+		const {isHidden} = props;
 		return (
 				<Wrapper isHidden={isHidden}>
 						<ButtonWrapper>
@@ -22,5 +20,7 @@ const Wrapper = styled.div `
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	visibility: ${props => props.isHidden ? `hidden` : `visible`}
+	visibility: ${props => props.isHidden
+		? `hidden`
+		: `visible`}
 `;
