@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ButtonWrapper = styled.div `
-margin-top: 50px;
+margin: 25px 0;
 width: 60%;
 display: flex;
 flex-wrap: wrap;

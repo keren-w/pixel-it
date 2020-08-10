@@ -1,27 +1,29 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import styled from "styled-components";
 import Pixelizer from "../../Pixelizer/components/Pixelizer";
-
-const imgSize = {
-		height: 100,
-		width: 100
-}
 
 const PhotoViewer = (props) => {
 		const {file} = props;
 		const canvasRef = useRef(null);
+		const [canvasElement, setCanvasElement] = useState(null); 
 
 		useEffect(() => {
-				const canvasElement = canvasRef && canvasRef.current;
-				console.dir(canvasElement)
+			const {current} = canvasRef;
+			setCanvasElement(current);
+			const {offsetHeight, offsetWidth} = current.parentElement;
+			current.height = Math.floor(offsetHeight)-10;
+			current.width = Math.floor(offsetWidth)-10;
+		}, [canvasRef]);
+
+		useEffect(() => {
+			if (file && canvasElement) {
 				const ctx = canvasElement && canvasElement.getContext('2d');
-				if (file && ctx) {
+					ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
 						createImageBitmap(file, {
-								// resizeWidth: imgSize.height, resizeHeight: imgSize.width,
 								resizeQuality: 'high'
 						}).then(bitmapImg => {
 								const {height, width} = getDisplayedImageSize(bitmapImg, canvasElement);
-								const centeredXPosition = canvasElement.offsetWidth/2 - width/2;
+								const centeredXPosition = canvasElement.offsetWidth / 2 - width / 2;
 								ctx.drawImage(bitmapImg, centeredXPosition, 0, width, height);
 						})
 				}
@@ -33,9 +35,8 @@ const PhotoViewer = (props) => {
 
 				const canvasHeight = canvasElement.offsetHeight;
 				const canvasWidth = canvasElement.offsetWidth;
-
-				const scaledImageHeight = (canvasWidth / width) * height
-				const scaledimageWidth = (canvasHeight / height) * width
+				const scaledImageHeight = parseInt((canvasWidth / width) * height);
+				const scaledimageWidth = parseInt((canvasHeight / height) * width);
 
 				const calculatedPortraitSize = {
 						height: canvasHeight,
@@ -59,7 +60,10 @@ const PhotoViewer = (props) => {
 
 		return (
 				<ViewerWrapper>
-						<canvas ref={canvasRef}/> {file && <Pixelizer/>}
+						<CanvasWrapper>
+								<canvas ref={canvasRef}/>
+						</CanvasWrapper>
+						<Pixelizer isHidden={!file}/>
 				</ViewerWrapper>
 		)
 }
@@ -70,4 +74,15 @@ const ViewerWrapper = styled.div `
 display: flex;
 flex-direction: column;
 align-items: center;
+flex: 1;
+width: 60%;
+canvas {
+	// flex: 1;
+	// width: 100%;
+}
+`;
+
+const CanvasWrapper = styled.div `
+	flex: 1;
+	width: 100%;
 `;

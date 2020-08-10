@@ -5,8 +5,9 @@ import {ButtonWrapper} from "../../common/styles";
 const Pixelizer = (props) => {
 		const [isActive,
 				setIsActive] = useState(false);
+				const {isHidden} = props;
 		return (
-				<Wrapper>
+				<Wrapper isHidden={isHidden}>
 						<ButtonWrapper>
 								<button className="pixelizer">Pixel it!</button>
 						</ButtonWrapper>
@@ -21,4 +22,5 @@ const Wrapper = styled.div `
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	visibility: ${props => props.isHidden ? `hidden` : `visible`}
 `;
