@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import styled from "styled-components";
-import Pixelizer from "../../Pixelizer/components/Pixelizer";
+import Pixelizer from "../../Pixelizer/components/PixelizerContainer";
 
 const PhotoViewer = (props) => {
 				const {file, renderConfig} = props;

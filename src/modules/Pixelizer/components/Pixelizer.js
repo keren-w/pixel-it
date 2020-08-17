@@ -3,11 +3,11 @@ import styled from "styled-components";
 import {ButtonWrapper} from "../../common/styles";
 
 const Pixelizer = (props) => {
-		const {isHidden} = props;
+		const {isHidden, pixelizerClicked} = props;
 		return (
 				<Wrapper isHidden={isHidden}>
 						<ButtonWrapper>
-								<button className="pixelizer" onClick={() => {}}>Pixel it!</button>
+								<button className="pixelizer" onClick={pixelizerClicked}>Pixel it!</button>
 						</ButtonWrapper>
 				</Wrapper>
 		)
