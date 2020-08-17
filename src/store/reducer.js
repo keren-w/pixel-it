@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import photoDetailsReducer from '../modules/PhotoViewer/data/reducer';
 import {appReducer} from "../modules/App/data/reducer";
+import {renderConfig} from "../modules/Pixelizer/data/reducer";
 
 /**
  * defining the state root reducer
@@ -9,5 +10,6 @@ import {appReducer} from "../modules/App/data/reducer";
 export default combineReducers({
     app: appReducer,
     uploadedPhoto: photoDetailsReducer,
+    renderConfig: renderConfig
 });
 

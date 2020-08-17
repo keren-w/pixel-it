@@ -7,7 +7,7 @@ const Pixelizer = (props) => {
 		return (
 				<Wrapper isHidden={isHidden}>
 						<ButtonWrapper>
-								<button className="pixelizer">Pixel it!</button>
+								<button className="pixelizer" onClick={() => {}}>Pixel it!</button>
 						</ButtonWrapper>
 				</Wrapper>
 		)
