@@ -11,7 +11,7 @@ align-items: baseline;
 label, button {
     position: relative;
     font-size: 1.15em;  
-    color: white;
+    color: rgba(255,255,255,1);
     display: inline-block;
     padding: 5px 15px;
     border-radius: 5px;
@@ -20,11 +20,15 @@ label, button {
     background-color: transparent;
     margin: none;
 
-    &:hover {
+    &:hover !&[disabled] {
         background-color: rgba(7,7,7,0.2);
     }
     &:focus {
         outline: none;
+    }
+    &[disabled] {
+        color: rgba(255,255,255,.2);
+        box-shadow: rgba(0,0,0,.6) 2px 2px 6px;
     }
 }
 
