@@ -20,12 +20,11 @@ const PhotoViewer = (props) => {
 
 				useEffect(() => {
 								if (file && canvasElement) {
-												createImageBitmap(file, {resizeQuality: 'high'}).then(bitmapImg => {
-													canvasService.renderImage(bitmapImg, renderConfig)
+												createImageBitmap(file).then(bitmapImg => {
+																canvasService.renderImage(bitmapImg, renderConfig)
 												})
 								}
 				}, [file, renderConfig]);
-
 
 				return (
 								<ViewerWrapper>
