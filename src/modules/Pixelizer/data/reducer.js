@@ -1,12 +1,19 @@
-import * as actions from '../../PhotoViewer/data/actions';
+import * as actions from './actions';
+import * as photoViewerActions from '../../PhotoViewer/data/actions';
 import {RENDER_TYPE} from './constants';
 
-const defaultState = {renderType: RENDER_TYPE.DEFAULT}
+const defaultState = {
+    renderType: RENDER_TYPE.DEFAULT
+}
 
 export const renderConfig = (state = defaultState, action) => {
     switch (action.type) {
-        case actions.HANDLE_PHOTO_UPLOADED:
-            return defaultState
+        case photoViewerActions.HANDLE_PHOTO_UPLOADED:
+            return defaultState;
+        case actions.UPDATE_RENDER_CONFIGS:
+            return {
+                renderType: action.payload
+            };
         default:
             return state;
     }

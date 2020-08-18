@@ -5,15 +5,14 @@ import {RENDER_TYPE} from './constants';
 
 function* handlePixerlizerActivated(action) {
     const {renderType: type} = yield select(getRenderConfig);
-    
-    //if not rendered
+    // yield console.log(type === RENDER_TYPE.DEFAULT);
+    //if not pixeled already
     if (type === RENDER_TYPE.DEFAULT) {
-        // get render configs take them
+        // set initial pixelizer configs
+        yield put(pixelizerActions.updateRenderConfigs(RENDER_TYPE.PIXELED));
     }
-    
-
-    // else take default config
-    yield console.log(type);
+    // set current pixelizer configs
+    yield put(pixelizerActions.UPDATE_RENDER_CONFIGS, type);
 };
 
 export default function* saga() {

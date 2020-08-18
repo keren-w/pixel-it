@@ -19,12 +19,12 @@ const PhotoViewer = (props) => {
 				useEffect(() => {
 								if (file && canvasElement) {
 												createImageBitmap(file, {resizeQuality: 'high'}).then(bitmapImg => {
-													renderImage(bitmapImg)
+													renderImage(bitmapImg, renderConfig)
 												})
 								}
 				}, [file, renderConfig]);
 
-				const renderImage = bitmapImg => {
+				const renderImage = (bitmapImg, renderConfig) => {
 								const ctx = canvasElement && canvasElement.getContext('2d');
 								ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
 								const {height, width} = getDisplayedImageSize(bitmapImg, canvasElement);
