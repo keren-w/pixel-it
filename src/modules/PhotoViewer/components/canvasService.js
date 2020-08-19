@@ -3,6 +3,7 @@ import {RENDER_TYPE} from '../../Pixelizer/data/constants';
 let ctx = null;
 let canvasElement = null;
 let pixelSize = 25;
+let currentImageData = null;
 
 export const init = canvasEl => {
     canvasElement = canvasEl;
@@ -15,14 +16,28 @@ export const renderImage = (bitmapImg, renderConfig) => {
     const centeredXPosition = canvasElement.offsetWidth / 2 - width / 2;
     switch (renderType) {
         case RENDER_TYPE.PIXELED:
-            getPixelizedImage(bitmapImg, height, width, centeredXPosition).then(pixelsArray => renderPixeledImage(pixelsArray, canvasElement));
+            const pixelsArray = getPixelizedImage(height, width, centeredXPosition);
+            renderPixeledImage(pixelsArray, canvasElement);
             break;
         case RENDER_TYPE.DEFAULT:
         default:
             ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
             ctx.drawImage(bitmapImg, centeredXPosition, 0, width, height);
+            // save current image data in service for later pixelizer calculation
+            setCurrentImageData(bitmapImg, height, width, centeredXPosition);
     }
 };
+
+const setCurrentImageData = (bitmapImg, height, width, centeredXPosition) => {
+    // resizing image to calculated measures
+    return createImageBitmap(bitmapImg, {
+        resizeHeight: height,
+        resizeWidth: width,
+        resizeQuality: 'high'
+    }).then(resizedImage => {
+        currentImageData = ctx.getImageData(centeredXPosition, 0, resizedImage.width, resizedImage.height);
+    });
+}
 
 const renderPixeledImage = (pixeledArray, canvasElement) => {
     ctx.clearRect(0, 0, canvasElement.offsetWidth, canvasElement.offsetHeight);
@@ -33,31 +48,26 @@ const renderPixeledImage = (pixeledArray, canvasElement) => {
     });
 };
 
-const getPixelizedImage = (bitmapImg, height, width, centeredXPosition) => {
-    // resizing image to calculated measures
-    return createImageBitmap(bitmapImg, {
-        resizeHeight: height,
-        resizeWidth: width,
-        resizeQuality: 'high'
-    }).then(resizedImage => {
+const getPixelizedImage = (height, width, centeredXPosition) => {
+    if (currentImageData) {
         let x,
-        y,
-        pixelizedImg = [];
+            y,
+            pixelizedImg = [];
         // Looping imageData in pixelSize chunks
-        for (x = centeredXPosition; x < centeredXPosition+width; x += pixelSize) {
+        for (x = 0; x < width; x += pixelSize) {
             let newColumn = []
             for (y = 0; y < height; y += pixelSize) {
-                let pixel = calculatePixel(x, y, resizedImage);
+                let pixel = calculatePixel(x, y, height, width, currentImageData, centeredXPosition);
+                console.log("getPixelizedImage -> centeredXPosition", centeredXPosition)
                 newColumn.push(pixel);
             }
             pixelizedImg.push(newColumn);
         }
         return pixelizedImg;
-    });
+    };
 };
 
-const calculatePixel = (x, y, bitmapImg) => {
-    let imageData = ctx.getImageData(0, 0, bitmapImg.width, bitmapImg.height);
+const calculatePixel = (x, y, height, width, imageData, centeredXPosition) => {
     let i,
         j,
         pixelColor = {
@@ -69,10 +79,10 @@ const calculatePixel = (x, y, bitmapImg) => {
 
     for (i = 0; i < pixelSize; ++i) {
         for (j = 0; j < pixelSize; ++j) {
-            pixelColor.red += imageData.data[((bitmapImg.width * y) + x) * 4]
-            pixelColor.green += imageData.data[((bitmapImg.width * y) + x) * 4 + 1]
-            pixelColor.blue += imageData.data[((bitmapImg.width * y) + x) * 4 + 2]
-            pixelColor.alpha += imageData.data[((bitmapImg.width * y) + x) * 4 + 3]
+            pixelColor.red += imageData.data[((width * y) + x) * 4]
+            pixelColor.green += imageData.data[((width * y) + x) * 4 + 1]
+            pixelColor.blue += imageData.data[((width * y) + x) * 4 + 2]
+            pixelColor.alpha += imageData.data[((width * y) + x) * 4 + 3]
         }
     }
     pixelColor.red = pixelColor.red / Math.pow(pixelSize, 2)
@@ -80,7 +90,7 @@ const calculatePixel = (x, y, bitmapImg) => {
     pixelColor.blue = pixelColor.blue / Math.pow(pixelSize, 2)
     pixelColor.alpha = pixelColor.alpha / Math.pow(pixelSize, 2)
     pixelColor = `rgba(${pixelColor.red},${pixelColor.green},${pixelColor.blue},${pixelColor.alpha})`
-    return new Pixel(pixelSize, x, y, pixelColor)
+    return new Pixel(pixelSize, x + centeredXPosition, y, pixelColor)
 };
 
 class Pixel {
