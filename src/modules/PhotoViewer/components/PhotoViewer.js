@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import styled from "styled-components";
 import Pixelizer from "../../Pixelizer/components/PixelizerContainer";
-import * as canvasService from './canvasService';
+import * as canvasService from './viewerRenderServices/canvasService';
 
 const PhotoViewer = (props) => {
 				const {file, renderConfig} = props;
