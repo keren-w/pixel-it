@@ -8,10 +8,10 @@ function * handlePixerlizerActivated(action) {
     // yield console.log(type === RENDER_TYPE.DEFAULT); if not pixeled already
     if (type === RENDER_TYPE.DEFAULT) {
         // set initial pixelizer configs
-        yield put(pixelizerActions.updateRenderConfigs(RENDER_TYPE.PIXELED));
+        yield put(pixelizerActions.updateRenderType(RENDER_TYPE.PIXELED));
     } else {
         // set current pixelizer configs
-        yield put(pixelizerActions.updateRenderConfigs(type));
+        yield put(pixelizerActions.updateRenderType(type));
     }
 };
 

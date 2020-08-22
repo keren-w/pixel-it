@@ -1,17 +1,18 @@
+const DEFAULT_PIXEL_SIZE = 25;
 class Pixel {
     constructor(size, x, y, color) {
-        this.height = size
-        this.width = size
-        this.color = color
-        this.x = x
-        this.y = y
+        this.height = size;
+        this.width = size;
+        this.color = color;
+        this.x = x;
+        this.y = y;
     }
 
     draw(ctx) {
         ctx.beginPath()
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
-        ctx.stroke()
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
     }
 };
 
@@ -22,6 +23,7 @@ export class PixeledImage {
         this.width = width;
         this.height = height;
         this.centeredXPosition = centeredXPosition;
+        this.pixelSize = DEFAULT_PIXEL_SIZE;
         if (bitmapImg && height && width && ctx) {
              createImageBitmap(bitmapImg, {
                 resizeHeight: height,
@@ -33,22 +35,25 @@ export class PixeledImage {
         }
     }
 
-    renderPixeledImage(ctx, pixelSize, canvasWidth, canvasHeight) {
+    renderPixeledImage(ctx, {pixelSize}, canvasWidth, canvasHeight) {
+        if (pixelSize && pixelSize !== this.pixelSize) {
+            this.pixelSize = pixelSize;
+        };
         if (this.imageData) {
-            const pixelsArray = this.getImagePixelizedArray(pixelSize);
+            const pixelsArray = this.getImagePixelizedArray();
             this.drawPixeledImagefromArray(ctx, pixelsArray, canvasWidth, canvasHeight);
         }
     }
 
-    getImagePixelizedArray = (pixelSize) => {
+    getImagePixelizedArray = () => {
         let x,
             y,
             pixelizedImg = [];
         // Looping imageData in pixelSize chunks
-        for (x = 0; x < this.width; x += pixelSize) {
+        for (x = 0; x < this.width; x += this.pixelSize) {
             let newColumn = []
-            for (y = 0; y < this.height; y += pixelSize) {
-                let pixel = this.calculatePixel(x, y, pixelSize);
+            for (y = 0; y < this.height; y += this.pixelSize) {
+                let pixel = this.calculatePixel(x, y);
                 newColumn.push(pixel);
             }
             pixelizedImg.push(newColumn);
@@ -57,7 +62,7 @@ export class PixeledImage {
 
     };
 
-    calculatePixel = (x, y, pixelSize) => {
+    calculatePixel = (x, y) => {
         let i,
             j,
             pixelColor = {
@@ -66,21 +71,20 @@ export class PixeledImage {
                 blue: 0,
                 alpha: 0
             }
-
-        for (i = 0; i < pixelSize; ++i) {
-            for (j = 0; j < pixelSize; ++j) {
+        for (i = 0; i < this.pixelSize; ++i) {
+            for (j = 0; j < this.pixelSize; ++j) {
                 pixelColor.red += this.imageData.data[((this.width * y) + x) * 4]
                 pixelColor.green += this.imageData.data[((this.width * y) + x) * 4 + 1]
                 pixelColor.blue += this.imageData.data[((this.width * y) + x) * 4 + 2]
                 pixelColor.alpha += this.imageData.data[((this.width * y) + x) * 4 + 3]
             }
         }
-        pixelColor.red = pixelColor.red / Math.pow(pixelSize, 2)
-        pixelColor.green = pixelColor.green / Math.pow(pixelSize, 2)
-        pixelColor.blue = pixelColor.blue / Math.pow(pixelSize, 2)
-        pixelColor.alpha = pixelColor.alpha / Math.pow(pixelSize, 2)
+        pixelColor.red = pixelColor.red / Math.pow(this.pixelSize, 2)
+        pixelColor.green = pixelColor.green / Math.pow(this.pixelSize, 2)
+        pixelColor.blue = pixelColor.blue / Math.pow(this.pixelSize, 2)
+        pixelColor.alpha = pixelColor.alpha / Math.pow(this.pixelSize, 2)
         pixelColor = `rgba(${pixelColor.red},${pixelColor.green},${pixelColor.blue},${pixelColor.alpha})`
-        return new Pixel(pixelSize, x + this.centeredXPosition, y, pixelColor)
+        return new Pixel(this.pixelSize, x + this.centeredXPosition, y, pixelColor)
     };
 
     drawPixeledImagefromArray = (ctx, pixeledArray, canvasHeight, canvasWidth) => {

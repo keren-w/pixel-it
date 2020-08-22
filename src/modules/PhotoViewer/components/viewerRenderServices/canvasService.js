@@ -3,7 +3,6 @@ import {PixeledImage} from './pixelizedViewService';
 
 let ctx = null;
 let canvasElement = null;
-let pixelSize = 25;
 let currentPixeledImage = null;
 
 export const init = canvasEl => {
@@ -18,7 +17,7 @@ export const renderImage = (bitmapImg, renderConfig) => {
     switch (renderType) {
         case RENDER_TYPE.PIXELED:
             if (currentPixeledImage) {
-                currentPixeledImage.renderPixeledImage(ctx, pixelSize, canvasElement.offsetWidth, canvasElement.offsetHeight);
+                currentPixeledImage.renderPixeledImage(ctx, renderParams, canvasElement.offsetWidth, canvasElement.offsetHeight);
             }
             break;
         case RENDER_TYPE.DEFAULT:
