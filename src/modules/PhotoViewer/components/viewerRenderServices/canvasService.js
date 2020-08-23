@@ -10,31 +10,29 @@ export const init = canvasEl => {
     ctx = canvasEl.getContext('2d');
 };
 
-export const renderImage = (bitmapImg, renderConfig) => {
+export const renderImage = (canvasHeight, canvasWidth, bitmapImg, renderConfig) => {
     const {renderType, renderParams} = renderConfig;
-    const {height, width} = getDisplayedImageSize(bitmapImg, canvasElement);
-    const centeredXPosition = canvasElement.offsetWidth / 2 - width / 2;
+    const {height, width} = getDisplayedImageSize(bitmapImg, canvasHeight, canvasWidth);
     switch (renderType) {
         case RENDER_TYPE.PIXELED:
             if (currentPixeledImage) {
-                currentPixeledImage.renderPixeledImage(ctx, renderParams, canvasElement.offsetWidth, canvasElement.offsetHeight);
+                currentPixeledImage.renderPixeledImage(ctx, renderParams, canvasWidth, canvasHeight);
             }
             break;
         case RENDER_TYPE.DEFAULT:
         default:
+            canvasElement.height = height;
+            canvasElement.width = width;
             ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-            ctx.drawImage(bitmapImg, centeredXPosition, 0, width, height);
-            // save current image data in service for later pixelizer calculation
-            currentPixeledImage = new PixeledImage(bitmapImg, height, width, centeredXPosition, ctx);
+            ctx.drawImage(bitmapImg, 0, 0, width, height);
+            currentPixeledImage = new PixeledImage(bitmapImg, height, width, ctx);
     }
 };
 
-const getDisplayedImageSize = (bitmapImg, canvasElement) => {
+const getDisplayedImageSize = (bitmapImg, canvasHeight, canvasWidth) => {
     const {width, height} = bitmapImg;
     const isPortaitOrientation = height >= width;
 
-    const canvasHeight = canvasElement.offsetHeight;
-    const canvasWidth = canvasElement.offsetWidth;
     const scaledImageHeight = parseInt((canvasWidth / width) * height);
     const scaledimageWidth = parseInt((canvasHeight / height) * width);
 

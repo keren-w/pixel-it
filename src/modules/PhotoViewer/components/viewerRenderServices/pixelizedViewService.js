@@ -18,11 +18,10 @@ class Pixel {
 
 export class PixeledImage {
 
-    constructor(bitmapImg = null, height = 0, width = 0, centeredXPosition = 0, ctx = null) {
+    constructor(bitmapImg = null, height = 0, width = 0, ctx = null) {
         this.bitmapImg = bitmapImg;
         this.width = width;
         this.height = height;
-        this.centeredXPosition = centeredXPosition;
         this.pixelSize = DEFAULT_PIXEL_SIZE;
         if (bitmapImg && height && width && ctx) {
              createImageBitmap(bitmapImg, {
@@ -30,7 +29,7 @@ export class PixeledImage {
                 resizeWidth: width,
                 resizeQuality: 'high'
             }).then(resizedImage => {
-                this.imageData = ctx.getImageData(centeredXPosition, 0, resizedImage.width, resizedImage.height);
+                this.imageData = ctx.getImageData(0, 0, resizedImage.width, resizedImage.height);
             });
         }
     }
@@ -84,7 +83,7 @@ export class PixeledImage {
         pixelColor.blue = pixelColor.blue / Math.pow(this.pixelSize, 2)
         pixelColor.alpha = pixelColor.alpha / Math.pow(this.pixelSize, 2)
         pixelColor = `rgba(${pixelColor.red},${pixelColor.green},${pixelColor.blue},${pixelColor.alpha})`
-        return new Pixel(this.pixelSize, x + this.centeredXPosition, y, pixelColor)
+        return new Pixel(this.pixelSize, x, y, pixelColor)
     };
 
     drawPixeledImagefromArray = (ctx, pixeledArray, canvasHeight, canvasWidth) => {

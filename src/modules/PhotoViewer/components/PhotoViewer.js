@@ -12,16 +12,17 @@ const PhotoViewer = (props) => {
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
-								const {offsetHeight, offsetWidth} = current.parentElement;
-								current.height = Math.floor(offsetHeight) - 10;
-								current.width = Math.floor(offsetWidth) - 10;
+								// const {offsetHeight, offsetWidth} = current.parentElement;
+								// current.height = Math.floor(offsetHeight) - 10;
+								// current.width = Math.floor(offsetWidth) - 10;
 								canvasService.init(current);
 				}, [canvasRef]);
 
 				useEffect(() => {
 								if (file && canvasElement) {
+									const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 												createImageBitmap(file).then(bitmapImg => {
-																canvasService.renderImage(bitmapImg, renderConfig)
+																canvasService.renderImage(offsetHeight, offsetWidth, bitmapImg, renderConfig)
 												})
 								}
 				}, [file, renderConfig]);
