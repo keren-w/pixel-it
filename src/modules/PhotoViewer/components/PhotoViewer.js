@@ -21,8 +21,7 @@ const PhotoViewer = (props) => {
 
 				useEffect(() => {
 								if (file && canvasElement) {
-									setShowLoader(true);
-												setImageProps(null);
+												setShowLoader(true);
 												canvasElement.parentElement.style.width = `100%`;
 												const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 												createImageBitmap(file).then(bitmapImg => {
@@ -38,14 +37,19 @@ const PhotoViewer = (props) => {
 								var reader = new FileReader();
 								reader.readAsDataURL(file);
 								reader.onload = e => {
-												setImageProps({
-																...imageMeasures,
-																src: e.target.result
-												})
+												if (!imageProps || imageMeasures.height !== imageProps.height ||
+													imageMeasures.width !== imageProps.width ||
+													e.target.result !== imageProps.src) {
+																setImageProps({
+																				...imageMeasures,
+																				src: e.target.result
+																})
+												}
 												setShowLoader(false);
 								};
 				}
 
+				
 				return (
 								<ViewerWrapper>
 												{showLoader && <Loader>loading...</Loader>}
