@@ -10,13 +10,13 @@ export const init = canvasEl => {
     ctx = canvasEl.getContext('2d');
 };
 
-export const renderImage = (imageMeasures, bitmapImg, renderConfig, canvasWidth, canvasHeight) => {
+export const renderImage = (imageMeasures, bitmapImg, renderConfig) => {
     const {renderType, renderParams} = renderConfig;
     const {height, width} = imageMeasures;
     switch (renderType) {
         case RENDER_TYPE.PIXELED:
             if (currentPixeledImage) {
-                currentPixeledImage.renderPixeledImage(ctx, renderParams, canvasWidth, canvasHeight);
+                currentPixeledImage.renderPixeledImage(ctx, renderParams);
             }
             break;
         case RENDER_TYPE.DEFAULT:

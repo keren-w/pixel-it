@@ -86,8 +86,8 @@ export class PixeledImage {
         return new Pixel(this.pixelSize, x, y, pixelColor)
     };
 
-    drawPixeledImagefromArray = (ctx, pixeledArray, canvasHeight, canvasWidth) => {
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    drawPixeledImagefromArray = (ctx, pixeledArray) => {
+        ctx.clearRect(0, 0, this.width, this.height);
         pixeledArray.forEach((column) => {
             column.forEach((pixel) => {
                 pixel.draw(ctx);

@@ -9,8 +9,10 @@ const PhotoViewer = (props) => {
 				const canvasRef = useRef(null);
 				const [canvasElement,
 								setCanvasElement] = useState(null);
-				const [calculatedImageMeaures,
-								setImageMeaures] = useState(null);
+				const [imageProps,
+								setImageProps] = useState(null);
+				const [showLoader,
+								setShowLoader] = useState(false);
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
@@ -19,20 +21,37 @@ const PhotoViewer = (props) => {
 
 				useEffect(() => {
 								if (file && canvasElement) {
+									setShowLoader(true);
+												setImageProps(null);
+												canvasElement.parentElement.style.width = `100%`;
 												const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 												createImageBitmap(file).then(bitmapImg => {
 																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
-																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig, offsetHeight, offsetWidth);
-																setImageMeaures(imageMeasures);
+																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
+																getImageProps(imageMeasures);
 												});
 								}
 				}, [file, renderConfig]);
 
+				const getImageProps = (imageMeasures) => {
+								canvasElement.parentElement.style.width = `${imageMeasures.width}px`;
+								var reader = new FileReader();
+								reader.readAsDataURL(file);
+								reader.onload = e => {
+												setImageProps({
+																...imageMeasures,
+																src: e.target.result
+												})
+												setShowLoader(false);
+								};
+				}
+
 				return (
 								<ViewerWrapper>
-												<CanvasWrapper>
-																<canvas ref={canvasRef}/> {calculatedImageMeaures && <OriginalImageSlider file={file} imageMeasures={calculatedImageMeaures}/>}
-												</CanvasWrapper>
+												{showLoader && <Loader>loading...</Loader>}
+												<ImageViewWrapper showContent={imageProps}>
+																<canvas ref={canvasRef}/> {imageProps && <OriginalImageSlider {...imageProps}/>}
+												</ImageViewWrapper>
 												<Pixelizer isHidden={!file}/>
 								</ViewerWrapper>
 				)
@@ -46,17 +65,20 @@ flex-direction: column;
 align-items: center;
 flex: 1;
 width: 60%;
-canvas {
-	// flex: 1;
-	// width: 100%;
-}
 `;
 
-const CanvasWrapper = styled.div `
+const ImageViewWrapper = styled.div `
 	flex: 1;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	position: relative;
+	overflow: hidden;
+	visibility: ${props => props.showContent
+				? 'visible'
+				: 'hidden'};
+	canvas {
+		position: absolute;
 `;
+
+const Loader = styled.div `
+	color:white;
+	font-size:24px;
+`
