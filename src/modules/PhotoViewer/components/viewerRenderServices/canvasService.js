@@ -10,9 +10,9 @@ export const init = canvasEl => {
     ctx = canvasEl.getContext('2d');
 };
 
-export const renderImage = (canvasHeight, canvasWidth, bitmapImg, renderConfig) => {
+export const renderImage = (imageMeasures, bitmapImg, renderConfig, canvasWidth, canvasHeight) => {
     const {renderType, renderParams} = renderConfig;
-    const {height, width} = getDisplayedImageSize(bitmapImg, canvasHeight, canvasWidth);
+    const {height, width} = imageMeasures;
     switch (renderType) {
         case RENDER_TYPE.PIXELED:
             if (currentPixeledImage) {
@@ -29,7 +29,7 @@ export const renderImage = (canvasHeight, canvasWidth, bitmapImg, renderConfig) 
     }
 };
 
-const getDisplayedImageSize = (bitmapImg, canvasHeight, canvasWidth) => {
+export const getDisplayedImageSize = (bitmapImg, canvasHeight, canvasWidth) => {
     const {width, height} = bitmapImg;
     const isPortaitOrientation = height >= width;
 

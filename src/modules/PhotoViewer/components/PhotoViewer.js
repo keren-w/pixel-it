@@ -1,6 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import styled from "styled-components";
 import Pixelizer from "../../Pixelizer/components/PixelizerContainer";
+import OriginalImageSlider from "./OriginalImageSlider";
 import * as canvasService from './viewerRenderServices/canvasService';
 
 const PhotoViewer = (props) => {
@@ -8,29 +9,29 @@ const PhotoViewer = (props) => {
 				const canvasRef = useRef(null);
 				const [canvasElement,
 								setCanvasElement] = useState(null);
-
+				const [calculatedImageMeaures,
+								setImageMeaures] = useState(null);
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
-								// const {offsetHeight, offsetWidth} = current.parentElement;
-								// current.height = Math.floor(offsetHeight) - 10;
-								// current.width = Math.floor(offsetWidth) - 10;
 								canvasService.init(current);
 				}, [canvasRef]);
 
 				useEffect(() => {
 								if (file && canvasElement) {
-									const {offsetHeight, offsetWidth} = canvasElement.parentElement;
+												const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 												createImageBitmap(file).then(bitmapImg => {
-																canvasService.renderImage(offsetHeight, offsetWidth, bitmapImg, renderConfig)
-												})
+																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
+																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig, offsetHeight, offsetWidth);
+																setImageMeaures(imageMeasures);
+												});
 								}
 				}, [file, renderConfig]);
 
 				return (
 								<ViewerWrapper>
 												<CanvasWrapper>
-																<canvas ref={canvasRef}/>
+																<canvas ref={canvasRef}/> {calculatedImageMeaures && <OriginalImageSlider file={file} imageMeasures={calculatedImageMeaures}/>}
 												</CanvasWrapper>
 												<Pixelizer isHidden={!file}/>
 								</ViewerWrapper>
@@ -57,4 +58,5 @@ const CanvasWrapper = styled.div `
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 `;
