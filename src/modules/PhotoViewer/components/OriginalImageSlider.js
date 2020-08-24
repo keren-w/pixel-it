@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import styled from "styled-components";
 
 const SLIDER_ARROW_SIZE = 15;
@@ -19,49 +19,56 @@ const OriginalImageSlider = (props) => {
         // console.log(e.target.parentElement);
     };
 
-    return <SliderWrapper height={height} width={width} sliderPosition={sliderPosition}>
-        <OriginalImage src={src}/>
-        <Slider onDrag={handleSliderDrag}>
-            <TopSeperator/>
-            <Arrow/>
-            <BottomSeperator/>
-        </Slider>
-    </SliderWrapper>
+    return (
+        <Fragment>
+            <SliderWrapper height={height} width={width} sliderPosition={sliderPosition}>
+                <OriginalImage src={src} sliderPosition={sliderPosition}/>
+            </SliderWrapper>
+            < Slider onDrag={handleSliderDrag} sliderPosition={sliderPosition}>
+                <TopSeperator/>
+                < Arrow/>
+                <BottomSeperator/>
+            </Slider>
+        </Fragment>
+    )
 }
 
 export default OriginalImageSlider;
 
 const SliderWrapper = styled.div `
     height: 100%;
-	position: absolute;
+	position: relative;
     top: 0;
-    left: ${props => `${ 100 - props.sliderPosition}%`};
+    left: ${props => `${100-props.sliderPosition}%`};
+    overflow: hidden;
 `;
 const OriginalImage = styled.img `
     height: 100%;
+    position: absolute;
+    left: -${props => `${100-props.sliderPosition}%`};
 `;
 const Slider = styled.span `
     height: 100%;
-    width: ${SLIDER_ARROW_SIZE * 2}px;
+    width: ${SLIDER_ARROW_SIZE*2}px;
     position: absolute;
     top: 0;
-    left: ${ - 1 * SLIDER_ARROW_SIZE - 1}px;
+    left: ${props => `calc(${props.sliderPosition}% - ${SLIDER_ARROW_SIZE+3}px)`};
     cursor: col-resize;
 `;
 const Arrow = styled.span `
-    height: ${SLIDER_ARROW_SIZE * 2}px;
+    height: ${SLIDER_ARROW_SIZE*2}px;
     width: 100%;
     border: ${SLIDER_BORDER_SIZE}px solid white;
     position: absolute;
-    top: calc(50% - ${SLIDER_HYPOTENUSE / 2-3}px); /*3: offset between two elements*/
+    top: calc(50% - ${SLIDER_HYPOTENUSE/2-3}px); /* offset between two elements*/
     left: 0;
-    transform: rotate(45deg);   
+    transform: rotate(45deg);
 `;
 const TopSeperator = styled.div `
     width: ${SLIDER_BORDER_SIZE}px;
     background-color: white;
-    height: calc(50% - ${SLIDER_HYPOTENUSE / 2}px);
-    left: ${SLIDER_ARROW_SIZE + 1}px;
+    height: calc(50% - ${SLIDER_HYPOTENUSE/2}px);
+    left: ${SLIDER_ARROW_SIZE+1}px;
     position: absolute;
     top: 0;
 `;
