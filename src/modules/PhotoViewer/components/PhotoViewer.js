@@ -3,14 +3,15 @@ import styled from "styled-components";
 import Pixelizer from "../../Pixelizer/components/PixelizerContainer";
 import OriginalImageSlider from "./OriginalImageSlider";
 import * as canvasService from './viewerRenderServices/canvasService';
+import {theme} from "../../common/theme";
 
 const PhotoViewer = (props) => {
 				const {file, renderConfig} = props;
 				const canvasRef = useRef(null);
 				const [canvasElement,
 								setCanvasElement] = useState(null);
-				const [imageProps,
-								setImageProps] = useState(null);
+				const [imageSource,
+								setImageSource] = useState(null);
 				const [showLoader,
 								setShowLoader] = useState(false);
 				useEffect(() => {
@@ -26,22 +27,21 @@ const PhotoViewer = (props) => {
 																canvasElement.parentElement.style.width = `100%`;
 																const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
+																theme.imageMeasures = imageMeasures;
+																console.log("PhotoViewer -> imageMeasures", imageMeasures)
 																canvasElement.parentElement.style.width = `${imageMeasures.width}px`;
 																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
-																getImageProps(imageMeasures);
+																getImageProps();
 												});
 								}
 				}, [file, renderConfig]);
 
-				const getImageProps = (imageMeasures) => {
+				const getImageProps = () => {
 								var reader = new FileReader();
 								reader.readAsDataURL(file);
 								reader.onload = e => {
-												if (!imageProps || imageMeasures.height !== imageProps.height || imageMeasures.width !== imageProps.width || e.target.result !== imageProps.src) {
-																setImageProps({
-																				...imageMeasures,
-																				src: e.target.result
-																})
+												if (e.target.result !== imageSource) {
+																setImageSource({src: e.target.result})
 												}
 												setShowLoader(false);
 								};
@@ -50,9 +50,9 @@ const PhotoViewer = (props) => {
 				return (
 								<ViewerWrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
-												<ImageViewWrapper showContent={imageProps}>
+												<ImageViewWrapper showContent={imageSource}>
 																<canvas ref={canvasRef}/>
-																<OriginalImageSlider {...imageProps}/>
+																<OriginalImageSlider src={imageSource}/>
 												</ImageViewWrapper>
 												<Pixelizer isHidden={!file}/>
 								</ViewerWrapper>

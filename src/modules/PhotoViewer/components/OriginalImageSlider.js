@@ -6,7 +6,7 @@ const SLIDER_BORDER_SIZE = 2;
 const SLIDER_HYPOTENUSE = Math.sqrt(Math.pow(SLIDER_ARROW_SIZE * 2, 2) * 2);
 
 const OriginalImageSlider = (props) => {
-    const {height, width, src} = props;
+    const {src} = props;
     const [sliderPosition,
         setSliderPosition] = useState(50);
 
@@ -15,22 +15,22 @@ const OriginalImageSlider = (props) => {
         }, [src])
 
     const handleSliderDrag = e => {
-        const {parentElement} = e.target;
-        // console.dir(parentElement)
-        const newSilderPosition = width / (e.clientX - width);
-        console.log(newSilderPosition)
+        const {parentElement} = e.target.parentElement;
+        console.dir(parentElement)
+        // const newSilderPosition = width / (e.clientX - width);
+        console.log(e.movementX)
         // setSliderPosition(newSilderPosition); console.log(e.clientX);
         // console.log(e.target.parentElement);
     };
 
     return (
         <Fragment>
-            <SliderWrapper height={height} width={width} sliderPosition={sliderPosition}>
+            <SliderWrapper sliderPosition={sliderPosition}>
                 <OriginalImage src={src} sliderPosition={sliderPosition}/>
             </SliderWrapper>
-            < Slider onDrag={handleSliderDrag} sliderPosition={sliderPosition}>
+            <Slider onDrag={handleSliderDrag} sliderPosition={sliderPosition}>
                 <TopSeperator/>
-                < Arrow/>
+                <Arrow/>
                 <BottomSeperator/>
             </Slider>
         </Fragment>
@@ -52,11 +52,11 @@ const OriginalImage = styled.img `
     left: -${props => `${100-props.sliderPosition}%`};
 `;
 const Slider = styled.span `
-    height: 100%;
+    height: ${props => props.theme.imageMeasures.height}px;
     width: ${SLIDER_ARROW_SIZE*2}px;
     position: absolute;
     top: 0;
-    left: ${props => `calc(${props.sliderPosition}% - ${SLIDER_ARROW_SIZE+3}px)`};
+    left: ${props => `calc(${props.sliderPosition}% - ${SLIDER_ARROW_SIZE+2}px)`};
     cursor: col-resize;
 `;
 const Arrow = styled.span `
@@ -64,14 +64,14 @@ const Arrow = styled.span `
     width: 100%;
     border: ${SLIDER_BORDER_SIZE}px solid white;
     position: absolute;
-    top: calc(50% - ${SLIDER_HYPOTENUSE/2-3}px); /* offset between two elements*/
+    top: ${props => `${(props.theme.imageMeasures.height/2-SLIDER_HYPOTENUSE/2)+3}px`}; /* offset between two elements*/
     left: 0;
     transform: rotate(45deg);
 `;
 const TopSeperator = styled.div `
     width: ${SLIDER_BORDER_SIZE}px;
     background-color: white;
-    height: calc(50% - ${SLIDER_HYPOTENUSE/2}px);
+    height: ${props => `${(props.theme.imageMeasures.height/2-SLIDER_HYPOTENUSE/2)-1}px`};
     left: ${SLIDER_ARROW_SIZE+1}px;
     position: absolute;
     top: 0;
