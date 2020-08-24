@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import styled from "styled-components";
 
 const SLIDER_ARROW_SIZE = 15;
@@ -9,6 +9,10 @@ const OriginalImageSlider = (props) => {
     const {height, width, src} = props;
     const [sliderPosition,
         setSliderPosition] = useState(50);
+
+        useEffect(() => {
+            setSliderPosition(0);
+        }, [src])
 
     const handleSliderDrag = e => {
         const {parentElement} = e.target;

@@ -22,10 +22,11 @@ const PhotoViewer = (props) => {
 				useEffect(() => {
 								if (file && canvasElement) {
 												setShowLoader(true);
-												canvasElement.parentElement.style.width = `100%`;
-												const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 												createImageBitmap(file).then(bitmapImg => {
+																canvasElement.parentElement.style.width = `100%`;
+																const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
+																canvasElement.parentElement.style.width = `${imageMeasures.width}px`;
 																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
 																getImageProps(imageMeasures);
 												});
@@ -33,13 +34,10 @@ const PhotoViewer = (props) => {
 				}, [file, renderConfig]);
 
 				const getImageProps = (imageMeasures) => {
-								canvasElement.parentElement.style.width = `${imageMeasures.width}px`;
 								var reader = new FileReader();
 								reader.readAsDataURL(file);
 								reader.onload = e => {
-												if (!imageProps || imageMeasures.height !== imageProps.height ||
-													imageMeasures.width !== imageProps.width ||
-													e.target.result !== imageProps.src) {
+												if (!imageProps || imageMeasures.height !== imageProps.height || imageMeasures.width !== imageProps.width || e.target.result !== imageProps.src) {
 																setImageProps({
 																				...imageMeasures,
 																				src: e.target.result
@@ -49,12 +47,12 @@ const PhotoViewer = (props) => {
 								};
 				}
 
-				
 				return (
 								<ViewerWrapper>
-												{showLoader && <Loader>loading...</Loader>}
+												{/* {showLoader && <Loader>loading...</Loader>} */}
 												<ImageViewWrapper showContent={imageProps}>
-																<canvas ref={canvasRef}/> {imageProps && <OriginalImageSlider {...imageProps}/>}
+																<canvas ref={canvasRef}/>
+																<OriginalImageSlider {...imageProps}/>
 												</ImageViewWrapper>
 												<Pixelizer isHidden={!file}/>
 								</ViewerWrapper>
