@@ -10,15 +10,17 @@ const OriginalImageSlider = (props) => {
     const [sliderPosition,
         setSliderPosition] = useState(50);
 
-        useEffect(() => {
-            setSliderPosition(0);
-        }, [src])
+        // useEffect(() => {
+        //     setSliderPosition(0);
+        // }, [src])
 
     const handleSliderDrag = e => {
-        const {parentElement} = e.target.parentElement;
-        console.dir(parentElement)
+        // const {parentElement} = e.target.parentElement;
+        // console.log(parentElement.offsetLeft)
         // const newSilderPosition = width / (e.clientX - width);
-        console.log(e.movementX)
+        // console.log(e.nativeEvent.target);
+        const movementX = e.nativeEvent.offsetX-SLIDER_HYPOTENUSE/2;
+        console.log(movementX);
         // setSliderPosition(newSilderPosition); console.log(e.clientX);
         // console.log(e.target.parentElement);
     };
@@ -40,23 +42,23 @@ const OriginalImageSlider = (props) => {
 export default OriginalImageSlider;
 
 const SliderWrapper = styled.div `
-    height: 100%;
+    height: ${props => props.theme.imageMeasures.height}px;
 	position: relative;
     top: 0;
-    left: ${props => `${100-props.sliderPosition}%`};
+    left: ${props => `${0+props.sliderPosition}px`};
     overflow: hidden;
 `;
 const OriginalImage = styled.img `
     height: 100%;
     position: absolute;
-    left: -${props => `${100-props.sliderPosition}%`};
+    left: ${props => `-${0+props.sliderPosition}px`};
 `;
 const Slider = styled.span `
     height: ${props => props.theme.imageMeasures.height}px;
     width: ${SLIDER_ARROW_SIZE*2}px;
     position: absolute;
     top: 0;
-    left: ${props => `calc(${props.sliderPosition}% - ${SLIDER_ARROW_SIZE+2}px)`};
+    left: ${props => `${props.sliderPosition-SLIDER_HYPOTENUSE/2+SLIDER_BORDER_SIZE*2}px`};
     cursor: col-resize;
 `;
 const Arrow = styled.span `

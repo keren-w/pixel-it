@@ -28,7 +28,6 @@ const PhotoViewer = (props) => {
 																const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
 																theme.imageMeasures = imageMeasures;
-																console.log("PhotoViewer -> imageMeasures", imageMeasures)
 																canvasElement.parentElement.style.width = `${imageMeasures.width}px`;
 																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
 																getImageProps();
@@ -41,7 +40,7 @@ const PhotoViewer = (props) => {
 								reader.readAsDataURL(file);
 								reader.onload = e => {
 												if (e.target.result !== imageSource) {
-																setImageSource({src: e.target.result})
+																setImageSource(e.target.result);
 												}
 												setShowLoader(false);
 								};
