@@ -1,7 +1,8 @@
 import React, {useRef, useState, useEffect} from 'react';
 import styled from "styled-components";
 import Pixelizer from "../../Pixelizer/components/PixelizerContainer";
-import OriginalImageSlider from "./OriginalImageSlider";
+import OriginalImage from "./OriginalImage";
+import Slider from "./Slider";
 import * as canvasService from './viewerRenderServices/canvasService';
 import {theme} from "../../common/theme";
 
@@ -14,6 +15,8 @@ const PhotoViewer = (props) => {
 								setImageSource] = useState(null);
 				const [showLoader,
 								setShowLoader] = useState(false);
+				const [sliderPosition,
+								setSliderPosition] = useState(50);
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
@@ -41,6 +44,7 @@ const PhotoViewer = (props) => {
 								reader.onload = e => {
 												if (e.target.result !== imageSource) {
 																setImageSource(e.target.result);
+																setSliderPosition(0);
 												}
 												setShowLoader(false);
 								};
@@ -49,9 +53,10 @@ const PhotoViewer = (props) => {
 				return (
 								<ViewerWrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
+												{imageSource && <Slider sliderPosition={sliderPosition} setSliderPosition={setSliderPosition}/>}
 												<ImageViewWrapper showContent={imageSource}>
 																<canvas ref={canvasRef}/>
-																<OriginalImageSlider src={imageSource}/>
+																<OriginalImage src={imageSource} sliderPosition={sliderPosition}/>
 												</ImageViewWrapper>
 												<Pixelizer isHidden={!file}/>
 								</ViewerWrapper>
@@ -61,6 +66,7 @@ const PhotoViewer = (props) => {
 export default PhotoViewer;
 
 const ViewerWrapper = styled.div `
+position: relative;
 display: flex;
 flex-direction: column;
 align-items: center;
