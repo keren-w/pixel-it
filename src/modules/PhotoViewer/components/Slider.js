@@ -6,7 +6,7 @@ const SLIDER_BORDER_SIZE = 2;
 const SLIDER_HYPOTENUSE = Math.sqrt(Math.pow(SLIDER_ARROW_SIZE * 2, 2) * 2);
 
 const Slider = (props) => {
-    const {sliderPosition, setSliderPosition} = props;
+    const {setSliderPosition} = props;
 
     const handleSliderDrag = e => {
         // console.log("OriginalImageSlider -> e", e.nativeEvent)
@@ -33,7 +33,7 @@ const Slider = (props) => {
     };
 
     return (
-        <SliderWrapper draggable onDrag={handleSliderDrag} sliderPosition={sliderPosition}>
+        <SliderWrapper draggable>
                 <TopSeperator/>
                 <Arrow/>
                 <BottomSeperator/>
@@ -48,9 +48,9 @@ const SliderWrapper = styled.span `
     width: ${SLIDER_ARROW_SIZE*2}px;
     position: absolute;
     top: 0;
-    left: ${props => `${props.sliderPosition-SLIDER_HYPOTENUSE/2+SLIDER_BORDER_SIZE*2}px`};
+    left: ${props => `calc(100% - ${props.theme.imageMeasures.width+SLIDER_HYPOTENUSE/2-SLIDER_BORDER_SIZE*2-props.theme.sliderPosition}px)`};
     cursor: col-resize;
-    z-index: 1;
+    z-index: 2;
 `;
 const Arrow = styled.span `
     height: ${SLIDER_ARROW_SIZE*2}px;

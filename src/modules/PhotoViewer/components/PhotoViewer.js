@@ -38,6 +38,10 @@ const PhotoViewer = (props) => {
 								}
 				}, [file, renderConfig]);
 
+				useEffect(() => {
+								theme.sliderPosition = sliderPosition;
+				}, [sliderPosition]);
+
 				const getImageProps = () => {
 								var reader = new FileReader();
 								reader.readAsDataURL(file);
@@ -50,13 +54,21 @@ const PhotoViewer = (props) => {
 								};
 				}
 
+				const handleDragOver = e => {
+								if (e.nativeEvent.screenX) {
+												const offsetX = e.nativeEvent.target.offsetParent.offsetLeft;
+												const movementX = e.nativeEvent.offsetX;
+												setSliderPosition(movementX + offsetX);
+								}
+				}
+
 				return (
 								<ViewerWrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
-												{imageSource && <Slider sliderPosition={sliderPosition} setSliderPosition={setSliderPosition}/>}
-												<ImageViewWrapper showContent={imageSource}>
+												{imageSource && <Slider setSliderPosition={setSliderPosition}/>}
+												<ImageViewWrapper showContent={imageSource} onDragOver={handleDragOver}>
+																<OriginalImage src={imageSource}/>
 																<canvas ref={canvasRef}/>
-																<OriginalImage src={imageSource} sliderPosition={sliderPosition}/>
 												</ImageViewWrapper>
 												<Pixelizer isHidden={!file}/>
 								</ViewerWrapper>
@@ -83,6 +95,7 @@ const ImageViewWrapper = styled.div `
 				: 'hidden'};
 	canvas {
 		position: absolute;
+		top: 0;
 `;
 
 const Loader = styled.div `
