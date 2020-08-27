@@ -7,7 +7,7 @@ import * as canvasService from './viewerRenderServices/canvasService';
 import {theme} from "../../common/theme";
 
 const PhotoViewer = (props) => {
-				const {file, renderConfig} = props;
+				const {file, showSlider, renderConfig} = props;
 				const canvasRef = useRef(null);
 				const [canvasElement,
 								setCanvasElement] = useState(null);
@@ -65,7 +65,7 @@ const PhotoViewer = (props) => {
 				return (
 								<ViewerWrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
-												{imageSource && <Slider setSliderPosition={setSliderPosition}/>}
+												{showSlider && <Slider setSliderPosition={setSliderPosition}/>}
 												<ImageViewWrapper showContent={imageSource} onDragOver={handleDragOver}>
 																<OriginalImage src={imageSource}/>
 																<canvas ref={canvasRef}/>
