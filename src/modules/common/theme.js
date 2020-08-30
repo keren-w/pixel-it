@@ -1,7 +1,7 @@
 export const theme = {
     imageMeasures: {
-        height: 100,
-        width: 100
+        height: 0,
+        width: 0
     },
     backgroundGradientLight: '#603675',
     backgroundGradientDark: '#0C070F',

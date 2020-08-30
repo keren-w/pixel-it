@@ -23,7 +23,7 @@ const SliderWrapper = styled.span `
     width: ${SLIDER_ARROW_SIZE * 2}px;
     position: absolute;
     top: 0;
-    left: ${props => `calc(100% - ${props.theme.imageMeasures.width + SLIDER_HYPOTENUSE / 2 - SLIDER_BORDER_SIZE * 2 - props.theme.sliderPosition}px)`};
+    left: ${props => `${-1*SLIDER_HYPOTENUSE / 2 + SLIDER_BORDER_SIZE * 3 + props.theme.sliderPosition}px`};
     cursor: col-resize;
     z-index: 2;
 `;

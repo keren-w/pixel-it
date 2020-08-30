@@ -28,12 +28,9 @@ const PhotoViewer = (props) => {
 								if (file && canvasElement) {
 												setShowLoader(true);
 												createImageBitmap(file).then(bitmapImg => {
-																canvasElement.parentElement.style.width = `100%`;
 																const {offsetHeight, offsetWidth} = canvasElement.parentElement;
 																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
 																theme.imageMeasures = imageMeasures;
-																canvasElement.parentElement.style.width = `${imageMeasures.width}px`;
-																canvasElement.parentElement.style.height = `${imageMeasures.height}px`;
 																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
 																getImageProps();
 												});
@@ -59,8 +56,11 @@ const PhotoViewer = (props) => {
 				const handleDragOver = e => {
 								if (e.nativeEvent.screenX) {
 												const offsetX = e.nativeEvent.target.offsetParent.offsetLeft;
-												const movementX = e.nativeEvent.offsetX;
-												setSliderPosition(movementX + offsetX);
+													const movementX = e.nativeEvent.offsetX + offsetX;
+													console.log("PhotoViewer -> movementX", movementX)
+												if (movementX >= 0 && movementX <= theme.imageMeasures.width) {
+													setSliderPosition(movementX);
+												}
 								}
 				}
 				return (
@@ -108,14 +108,9 @@ const ViewerFlexWrapper = styled.div `
 `;
 
 const ViewerSizeWrapper = styled.div `
-    width: ${ ({
-				theme}) => theme.imageMeasures.width}px;
-    height: ${ ({
-								theme}) => theme.imageMeasures.height}px;
+    width: ${({theme}) => theme.imageMeasures.width ? `${theme.imageMeasures.width}px` : `100%`};
+    height: ${({theme}) => theme.imageMeasures.height ? `${theme.imageMeasures.height}px` : `100%`};
 	position: relative;
-	height: 100%;
-    width: 100%;
-	
 `;
 
 const Loader = styled.div `
