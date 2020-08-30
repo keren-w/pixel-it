@@ -7,13 +7,17 @@ import {Toaster} from "./Toaster";
 import {theme} from "../../common/theme";
 
 const App = (props) => {
-  const {showToaster, toasterMessage, dismissToaster} = props;
+  const {
+    showToaster,
+    toasterMessage,
+    dismissToaster,
+    displayViewer
+  } = props;
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
       <Header/>
-      <PhotoUploader/>
-      <PhotoViewer/>
+      {displayViewer ? <PhotoViewer/> : <PhotoUploader/>}
       {showToaster && <Toaster message={toasterMessage} dismissToaster={dismissToaster}/>}
     </AppWrapper>
     </ThemeProvider>
@@ -23,7 +27,7 @@ const App = (props) => {
 export default App;
 
 const AppWrapper = styled.div `
-    background-color: #282c34;
+    background-image: ${({theme}) => `linear-gradient(to bottom left, ${theme.backgroundGradientLight}, ${theme.backgroundGradientDark})`};
     height: 100vh;
     display: flex;
     flex-direction: column;

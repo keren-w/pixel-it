@@ -36,7 +36,7 @@ const PhotoViewer = (props) => {
 																getImageProps();
 												});
 								}
-				}, [file, renderConfig]);
+				}, [file, renderConfig, canvasElement]);
 
 				useEffect(() => {
 								theme.sliderPosition = sliderPosition;
@@ -61,7 +61,6 @@ const PhotoViewer = (props) => {
 												setSliderPosition(movementX + offsetX);
 								}
 				}
-
 				return (
 								<ViewerWrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}

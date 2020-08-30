@@ -17,6 +17,6 @@ const HeaderWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
     font-size: 32px;
-    color: white;
+    color: ${({theme}) => theme.logoColor};
     margin-top: 50px;
 `;

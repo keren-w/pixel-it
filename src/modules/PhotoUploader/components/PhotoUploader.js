@@ -4,41 +4,43 @@ import {getPhotoInputValidationResult} from "../data/validator";
 import {ButtonWrapper} from "../../common/styles";
 
 const PhotoUploader = (props) => {
-		const {name} = props;
-		const checkInput = (e) => {
-				const {files, accept} = e.target;
-				const file = files.length > 0 && files[0];
-				
-				const validationResult = getPhotoInputValidationResult(file, accept);
-				const {isValid, message} = validationResult;
+				const {name} = props;
+				const checkInput = (e) => {
+								const {files, accept} = e.target;
+								const file = files.length > 0 && files[0];
 
-				if (!isValid) {
-						props.setShowToaster(message);
-						e.target.value = null; // nullify input so to revalidate onChange
+								const validationResult = getPhotoInputValidationResult(file, accept);
+								const {isValid, message} = validationResult;
 
-				} else if (file) {
-						props.handlePhotoUpload(file);
+								if (!isValid) {
+												props.setShowToaster(message);
+												e.target.value = null; // nullify input so to revalidate onChange
+
+								} else if (file) {
+												props.handlePhotoUpload(file);
+								}
 				}
-		}
 
-		return (
-				<UploderWrapper>
-						<label htmlFor="file">Upload a photo
-								<input
-										className="user-file"
-										id="photo-input"
-										type="file"
-										accept="image/jpeg"
-										onInput={checkInput}/>
-						</label>
-						{name && <FileName>{name}</FileName>}
-				</UploderWrapper>
-		);
+				return (
+								<UploderWrapper>
+												<label htmlFor="file">Upload a photo
+																<input
+																				className="user-file"
+																				id="photo-input"
+																				type="file"
+																				accept="image/jpeg"
+																				onInput={checkInput}/>
+												</label>
+												{name && <FileName>{name}</FileName>}
+								</UploderWrapper>
+				);
 }
 
 export default PhotoUploader;
 
-const UploderWrapper = styled(ButtonWrapper)`   
+const UploderWrapper = styled(ButtonWrapper)`
+	flex: 1;
+	align-items: center;
 	#photo-input {
 		width: 100%;
 		height: 100%;

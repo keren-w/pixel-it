@@ -11,7 +11,7 @@ align-items: baseline;
 label, button {
     position: relative;
     font-size: 1.15em;  
-    color: rgba(255,255,255,1);
+    color: ${({theme}) => theme.buttonColor};
     display: inline-block;
     padding: 5px 15px;
     border-radius: 5px;
