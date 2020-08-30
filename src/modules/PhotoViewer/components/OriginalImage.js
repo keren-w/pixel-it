@@ -5,7 +5,7 @@ const OriginalImage = (props) => {
     const {src} = props;
 
     return (
-        <ImageWrapper>
+        <ImageWrapper id={'photo-input'}>
             <Image src={src}/>
         </ImageWrapper>
     )

@@ -23,7 +23,8 @@ const PhotoUploader = (props) => {
 
 				return (
 								<UploderWrapper>
-												<label htmlFor="file">Upload a photo
+												<UploaderFrame>
+												<label htmlFor="file">Upload
 																<input
 																				className="user-file"
 																				id="photo-input"
@@ -32,6 +33,7 @@ const PhotoUploader = (props) => {
 																				onInput={checkInput}/>
 												</label>
 												{name && <FileName>{name}</FileName>}
+												</UploaderFrame>
 								</UploderWrapper>
 				);
 }
@@ -49,6 +51,17 @@ const UploderWrapper = styled(ButtonWrapper)`
 		opacity: 0;
 		position: absolute;
 	}
+`;
+
+const UploaderFrame = styled.div`
+	border: 2px solid ${({theme}) => theme.borderColor};
+	border-radius: 8px;
+    height: 70%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+	align-items: center;
+	margin-bottom: 6rem;
 `;
 
 const FileName = styled.span `

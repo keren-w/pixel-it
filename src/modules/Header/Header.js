@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import logo from "../../assets/images/Pixelit_svg.svg"
 
 const Header = (props) => {
     return (
         <HeaderWrapper>
-            Pixel It!
+            <img src={logo} alt={'Pixel It!'}/>
+            
         </HeaderWrapper>
     );
 };
@@ -12,11 +14,13 @@ const Header = (props) => {
 export default Header;
 
 const HeaderWrapper = styled.div`
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     font-size: 32px;
     color: ${({theme}) => theme.logoColor};
-    margin-top: 50px;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding-left: 3rem;
+
+    img {
+        height: 25px;
+    }
 `;

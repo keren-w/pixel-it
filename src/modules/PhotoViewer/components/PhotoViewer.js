@@ -16,7 +16,7 @@ const PhotoViewer = (props) => {
 				const [showLoader,
 								setShowLoader] = useState(false);
 				const [sliderPosition,
-								setSliderPosition] = useState(50);
+								setSliderPosition] = useState(0);
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
@@ -32,6 +32,7 @@ const PhotoViewer = (props) => {
 																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
 																theme.imageMeasures = imageMeasures;
 																canvasElement.parentElement.style.width = `${imageMeasures.width}px`;
+																canvasElement.parentElement.style.height = `${imageMeasures.height}px`;
 																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
 																getImageProps();
 												});
@@ -62,22 +63,25 @@ const PhotoViewer = (props) => {
 								}
 				}
 				return (
-								<ViewerWrapper>
+								<Wrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
-												{showSlider && <Slider setSliderPosition={setSliderPosition}/>}
-												<ImageViewWrapper showContent={imageSource} onDragOver={handleDragOver}>
-																<OriginalImage src={imageSource}/>
-																<canvas ref={canvasRef}/>
-												</ImageViewWrapper>
+												<ViewerFlexWrapper
+																showContent={imageSource}
+																onDragOver={handleDragOver}>
+																<ViewerSizeWrapper>
+																				{showSlider && <Slider setSliderPosition={setSliderPosition}/>}
+																				<OriginalImage src={imageSource}/>
+																				<canvas ref={canvasRef} id={'pixelized-output'}/>
+																</ViewerSizeWrapper>
+												</ViewerFlexWrapper>
 												<Pixelizer isHidden={!file}/>
-								</ViewerWrapper>
+								</Wrapper>
 				)
 }
 
 export default PhotoViewer;
 
-const ViewerWrapper = styled.div `
-position: relative;
+const Wrapper = styled.div `
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -85,19 +89,34 @@ flex: 1;
 width: 60%;
 `;
 
-const ImageViewWrapper = styled.div `
+const ViewerFlexWrapper = styled.div `
 	flex: 1;
-	position: relative;
-	overflow: hidden;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	visibility: ${props => props.showContent
 				? 'visible'
 				: 'hidden'};
 	canvas {
 		position: absolute;
 		top: 0;
+	}
+`;
+
+const ViewerSizeWrapper = styled.div `
+    width: ${ ({
+				theme}) => theme.imageMeasures.width}px;
+    height: ${ ({
+								theme}) => theme.imageMeasures.height}px;
+	position: relative;
+	height: 100%;
+    width: 100%;
+	
 `;
 
 const Loader = styled.div `
 	color:white;
 	font-size:24px;
-`
+`;

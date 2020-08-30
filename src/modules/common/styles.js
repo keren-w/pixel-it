@@ -11,14 +11,17 @@ align-items: baseline;
 label, button {
     position: relative;
     font-size: 1.15em;  
-    color: ${({theme}) => theme.buttonColor};
-    display: inline-block;
-    padding: 5px 15px;
+    background-color: ${({theme}) => theme.buttonColor};
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 5px;
-    box-shadow: black 2px 2px 6px;
+    box-shadow: rgba(0,0,0,0.2) -1px 22px 20px 2px;
     border: none;
-    background-color: transparent;
     margin: none;
+    height: 5rem;
+    width: 14rem;
 
     &:hover !&[disabled] {
         background-color: rgba(7,7,7,0.2);
