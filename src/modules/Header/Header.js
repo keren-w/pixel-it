@@ -16,8 +16,8 @@ const HeaderWrapper = styled.div`
     font-size: 32px;
     color: ${({theme}) => theme.logoColor};
     width: 100%;
-    margin-top: 0.5rem;
-    padding-left: 3rem;
+    margin-top: 5px;
+    padding-left: 2rem;
 
     img {
         height: 25px;

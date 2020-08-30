@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import PhotoUploader from './PhotoUploader'
-import {handlePhotoUpload} from "../../PhotoViewer/data/actions";
+import {handlePhotoUpload} from "../../ImageView/data/actions";
 import {setShowToaster} from "../../App/data/actions";
-import {getPhotoName} from "../../PhotoViewer/data/selectors";
+import {getPhotoName} from "../../ImageView/data/selectors";
 
 const mapStateToProps = (state) => ({
     name: getPhotoName(state)

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, {ThemeProvider} from "styled-components";
 import Header from "../../Header/Header";
-import PhotoUploader from "../../PhotoUploader/components/PhotoUploaderContainer";
-import PhotoViewer from "../../PhotoViewer/components/PhotoViewerContainer";
+import PhotoUploader from "../../UploaderView/components/PhotoUploaderContainer";
+import PhotoViewer from "../../ImageView/components/PhotoViewerContainer";
 import {Toaster} from "./Toaster";
 import {theme} from "../../common/theme";
 

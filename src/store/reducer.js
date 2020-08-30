@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import photoDetailsReducer from '../modules/PhotoViewer/data/reducer';
+import photoDetailsReducer from '../modules/ImageView/data/reducer';
 import {appReducer} from "../modules/App/data/reducer";
 import {renderConfig} from "../modules/Pixelizer/data/reducer";
 

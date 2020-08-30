@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import * as photoViewerActions from '../../PhotoViewer/data/actions';
+import * as photoViewerActions from '../../ImageView/data/actions';
 import {RENDER_TYPE} from './constants';
 
 const defaultState = {

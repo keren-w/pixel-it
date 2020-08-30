@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import App from "./App";
 import {getShowToaster, getToasterMessage} from "../data/selectors";
-import {getPhotoFile} from "../../PhotoViewer/data/selectors";
+import {getPhotoFile} from "../../ImageView/data/selectors";
 import {dismissToaster} from "../data/actions";
 
 const mapStateToProps = (state) => ({

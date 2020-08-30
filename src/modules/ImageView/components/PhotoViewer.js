@@ -5,9 +5,10 @@ import OriginalImage from "./OriginalImage";
 import Slider from "./Slider";
 import * as canvasService from './viewerRenderServices/canvasService';
 import {theme} from "../../common/theme";
+import ImageTitleBar from "./ImageTitleBar";
 
 const PhotoViewer = (props) => {
-				const {file, showSlider, renderConfig} = props;
+				const {file, name, showSlider, renderConfig} = props;
 				const canvasRef = useRef(null);
 				const [canvasElement,
 								setCanvasElement] = useState(null);
@@ -65,6 +66,7 @@ const PhotoViewer = (props) => {
 				return (
 								<Wrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
+												<ImageTitleBar name={name}/>
 												<ViewerFlexWrapper
 																showContent={imageSource}
 																onDragOver={handleDragOver}>
