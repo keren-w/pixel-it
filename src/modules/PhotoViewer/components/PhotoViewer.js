@@ -86,7 +86,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 flex: 1;
-width: 60%;
+width: 70%;
 `;
 
 const ViewerFlexWrapper = styled.div `

@@ -27,7 +27,7 @@ const App = (props) => {
 export default App;
 
 const AppWrapper = styled.div `
-    background-image: ${({theme}) => `linear-gradient(to bottom left, ${theme.backgroundGradientLight}, ${theme.backgroundGradientDark})`};
+    background: ${({theme}) => `transparent linear-gradient(201deg, ${theme.backgroundGradientLight} 0%, ${theme.backgroundGradientDark} 100%) 0% 0% no-repeat padding-box`};
     height: calc(100vh - 17px);
     display: flex;
     flex-direction: column;

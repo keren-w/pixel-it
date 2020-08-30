@@ -4,7 +4,7 @@ export const theme = {
         width: 100
     },
     backgroundGradientLight: '#603675',
-    backgroundGradientDark: '#0c070f',
+    backgroundGradientDark: '#0C070F',
     logoColor: '#a14acb',
     buttonColor: '#5f1782',
     borderColor: '#280a37'

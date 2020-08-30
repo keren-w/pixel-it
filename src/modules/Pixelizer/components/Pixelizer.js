@@ -6,9 +6,9 @@ const Pixelizer = (props) => {
 		const {isHidden, pixelizerClicked} = props;
 		return (
 				<Wrapper isHidden={isHidden}>
-						<ButtonWrapper>
+						<PixelitButtonWrapper>
 								<button disabled={false} className="pixelizer" onClick={pixelizerClicked}>Pixel it!</button>
-						</ButtonWrapper>
+						</PixelitButtonWrapper>
 				</Wrapper>
 		)
 }
@@ -24,3 +24,8 @@ const Wrapper = styled.div `
 		? `hidden`
 		: `visible`}
 `;
+
+const PixelitButtonWrapper = styled(ButtonWrapper)`
+button {
+	height: 4rem;
+}`;

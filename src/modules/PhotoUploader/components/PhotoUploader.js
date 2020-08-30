@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {getPhotoInputValidationResult} from "../data/validator";
 import {ButtonWrapper} from "../../common/styles";
+import uploadSymbol from "../../../assets/images/upload.svg";
 
 const PhotoUploader = (props) => {
 				const {name} = props;
@@ -24,6 +25,7 @@ const PhotoUploader = (props) => {
 				return (
 								<UploderWrapper>
 												<UploaderFrame>
+												<img src={uploadSymbol} alt={'Upload'}/>
 												<label htmlFor="file">Upload
 																<input
 																				className="user-file"
@@ -41,6 +43,7 @@ const PhotoUploader = (props) => {
 export default PhotoUploader;
 
 const UploderWrapper = styled(ButtonWrapper)`
+	margin: 0;
 	flex: 1;
 	align-items: center;
 	#photo-input {
@@ -58,10 +61,17 @@ const UploaderFrame = styled.div`
 	border-radius: 8px;
     height: 70%;
     width: 100%;
-    display: flex;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 	margin-bottom: 6rem;
+
+	img {
+		width: 88px;
+		height: calc(50% - 2rem);
+    	margin-top: 2rem;
+}
+	}
 `;
 
 const FileName = styled.span `

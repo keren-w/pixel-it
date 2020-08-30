@@ -19,8 +19,8 @@ label, button {
     border-radius: 5px;
     box-shadow: rgba(0,0,0,0.2) -1px 22px 20px 2px;
     border: none;
-    margin: none;
-    height: 5rem;
+    margin: 0;
+    height: 5.5rem;
     width: 14rem;
 
     &:hover !&[disabled] {

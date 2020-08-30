@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from "../../assets/images/Pixelit_svg.svg"
+import logo from "../../assets/images/Pixelit_svg.svg";
 
 const Header = (props) => {
     return (
         <HeaderWrapper>
             <img src={logo} alt={'Pixel It!'}/>
-            
         </HeaderWrapper>
     );
 };
