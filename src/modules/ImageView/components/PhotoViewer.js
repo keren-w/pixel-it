@@ -17,7 +17,10 @@ const PhotoViewer = (props) => {
 				const [showLoader,
 								setShowLoader] = useState(false);
 				const [sliderPosition,
-								setSliderPosition] = useState(0);
+								setSliderPosition] = useState(0);		
+    			const [isMouseDown,
+								setIsMouseDown] = useState(false);
+								
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
@@ -63,17 +66,35 @@ const PhotoViewer = (props) => {
 												}
 								}
 				}
+				
+				const slideToEvent = ({nativeEvent : e}) => {
+					console.log(e.target);
+					const x = e.pageX - e.target.getBoundingClientRect().left;
+					console.log("slideToEvent -> x", x)
+				};
+
 				return (
 								<Wrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
 												<ImageTitleBar name={name}/>
 												<ViewerFlexWrapper
 																showContent={imageSource}
-																onDragOver={handleDragOver}>
+																onMouseDown={() => {
+																	!isMouseDown && setIsMouseDown(true);
+																}}
+																	onMouseUp={() => {
+																		isMouseDown && setIsMouseDown(false);
+																	}}
+																	onMouseMove={e => {
+																	if (isMouseDown) {
+																		slideToEvent(e);
+																	}
+																}}
+																>
 																<ViewerSizeWrapper>
-																				{showSlider && <Slider setSliderPosition={setSliderPosition}/>}
+																				{showSlider && <Slider />}
 																				<OriginalImage src={imageSource}/>
-																				<canvas ref={canvasRef} id={'pixelized-output'}/>
+																				<canvas ref={canvasRef} id={'pixelized-output'} />
 																</ViewerSizeWrapper>
 												</ViewerFlexWrapper>
 												<Pixelizer isHidden={!file}/>

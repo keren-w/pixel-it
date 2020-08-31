@@ -8,7 +8,10 @@ const SLIDER_HYPOTENUSE = Math.sqrt(Math.pow(SLIDER_ARROW_SIZE * 2, 2) * 2);
 const Slider = (props) => {
 
     return (
-        <SliderWrapper draggable>
+        <SliderWrapper
+            draggable
+            onDragStart={e => e.preventDefault()}
+           >
             <TopSeperator/>
             <Arrow/>
             <BottomSeperator/>
