@@ -10,6 +10,7 @@ import ImageTitleBar from "./ImageTitleBar";
 const PhotoViewer = (props) => {
 				const {file, name, showSlider, renderConfig} = props;
 				const canvasRef = useRef(null);
+				const sliderRef = useRef(null);
 				const [canvasElement,
 								setCanvasElement] = useState(null);
 				const [imageSource,
@@ -20,10 +21,13 @@ const PhotoViewer = (props) => {
 								setSliderPosition] = useState(0);		
     			const [isMouseDown,
 								setIsMouseDown] = useState(false);
+				const [sliderContainerLeft,
+					 setSliderContainerLeft] = useState(0);
 								
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
+								setSliderContainerLeft(current.getBoundingClientRect().left)
 								canvasService.init(current);
 				}, [canvasRef]);
 
@@ -56,21 +60,42 @@ const PhotoViewer = (props) => {
 								};
 				}
 
-				const handleDragOver = e => {
-								if (e.nativeEvent.screenX) {
-												const offsetX = e.nativeEvent.target.offsetParent.offsetLeft;
-													const movementX = e.nativeEvent.offsetX + offsetX;
-													console.log("PhotoViewer -> movementX", movementX)
-												if (movementX >= 0 && movementX <= theme.imageMeasures.width) {
-													setSliderPosition(movementX);
-												}
+				const updateSilderPosition = e => {
+					const {movementX} = e;
+					const currentSliderLocation = sliderRef.current.getBoundingClientRect();
+					const currentsliderCenter = currentSliderLocation.left + currentSliderLocation.width/2;
+					
+								if (e.screenX) {
+													const x = currentsliderCenter + movementX - sliderContainerLeft;
+                                                    console.log("PhotoViewer -> x", x)
+				
+													if (x >= 0 && x <= theme.imageMeasures.width) {
+														setSliderPosition(x);
+													} else {
+														stopDrag(e);
+													}
 								}
 				}
 				
-				const slideToEvent = ({nativeEvent : e}) => {
-					console.log(e.target);
-					const x = e.pageX - e.target.getBoundingClientRect().left;
-					console.log("slideToEvent -> x", x)
+				const startDrag = (e) => {
+					if (!isMouseDown) {
+						console.log("start drag");
+						 setIsMouseDown(true);
+						}
+				};
+
+				const stopDrag = (e) => {
+					e.preventDefault();
+					if (isMouseDown) {
+						console.log("stop drag");
+						setIsMouseDown(false)
+					};
+				};
+
+				const onDrag = (e) => {
+					if (isMouseDown) {
+						updateSilderPosition(e);
+					}
 				};
 
 				return (
@@ -79,20 +104,12 @@ const PhotoViewer = (props) => {
 												<ImageTitleBar name={name}/>
 												<ViewerFlexWrapper
 																showContent={imageSource}
-																onMouseDown={() => {
-																	!isMouseDown && setIsMouseDown(true);
-																}}
-																	onMouseUp={() => {
-																		isMouseDown && setIsMouseDown(false);
-																	}}
-																	onMouseMove={e => {
-																	if (isMouseDown) {
-																		slideToEvent(e);
-																	}
-																}}
+																onMouseUp={stopDrag}
+																onMouseLeave={stopDrag}
+																onMouseMove={onDrag}
 																>
 																<ViewerSizeWrapper>
-																				{showSlider && <Slider />}
+																				{showSlider && <Slider onMouseDown={startDrag} forwardRef={sliderRef}/>}
 																				<OriginalImage src={imageSource}/>
 																				<canvas ref={canvasRef} id={'pixelized-output'} />
 																</ViewerSizeWrapper>

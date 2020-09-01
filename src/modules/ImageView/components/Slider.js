@@ -6,11 +6,13 @@ const SLIDER_BORDER_SIZE = 1;
 const SLIDER_HYPOTENUSE = Math.sqrt(Math.pow(SLIDER_ARROW_SIZE * 2, 2) * 2);
 
 const Slider = (props) => {
-
+const {onMouseDown, forwardRef} = props;
     return (
         <SliderWrapper
             draggable
             onDragStart={e => e.preventDefault()}
+            onMouseDown={onMouseDown}
+            ref={forwardRef}
            >
             <TopSeperator/>
             <Arrow/>
@@ -26,7 +28,7 @@ const SliderWrapper = styled.span `
     width: ${SLIDER_ARROW_SIZE * 2}px;
     position: absolute;
     top: 0;
-    left: ${props => `${-1*SLIDER_HYPOTENUSE / 2 + SLIDER_BORDER_SIZE * 3 + props.theme.sliderPosition}px`};
+    left: ${props => `${props.theme.sliderPosition-SLIDER_ARROW_SIZE}px`};
     cursor: col-resize;
     z-index: 2;
 `;
