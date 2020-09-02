@@ -60,16 +60,21 @@ const PhotoViewer = (props) => {
 				}
 
 				const updateSilderPosition = (e, transition) => {
-					const {movementX} = e;
-					const x = sliderPosition + movementX;
-
-					if (x >= 0 && x <= theme.imageMeasures.width) {
-						setSliderPosition(x);
-						transition && setSliderTransition(transition);
-					} else {
-						stopDrag(e);
-					}
+					const currentX = e.pageX - canvasElement.getBoundingClientRect().left;
+					const moveTo = inBetween(currentX, 0, theme.imageMeasures.width);
+					setSliderPosition(moveTo);
+					transition && setSliderTransition(transition);
 				}
+
+				const inBetween = (actual, min, max) => {
+					if (actual < min) {
+						return min;
+					  }
+					if (actual > max) {
+					return max;
+					}
+					return actual;
+				};
 				
 				const setSliderTransition = (transition) => {
 					theme.transition = `width ${transitionTime}ms`;
@@ -81,7 +86,6 @@ const PhotoViewer = (props) => {
 				
 				const startDrag = (e) => {
 					if (!isMouseDown) {
-						console.log("start drag");
 						 setIsMouseDown(true);
 						}
 				};
@@ -89,7 +93,6 @@ const PhotoViewer = (props) => {
 				const stopDrag = (e) => {
 					e.preventDefault();
 					if (isMouseDown) {
-						console.log("stop drag");
 						setIsMouseDown(false)
 					};
 				};
@@ -100,6 +103,12 @@ const PhotoViewer = (props) => {
 					}
 				};
 
+				const shouldResumeDrag = (e) => {
+					if (e.buttons !== 1) {
+						stopDrag(e);
+					}
+				};
+
 				return (
 								<Wrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
@@ -107,7 +116,7 @@ const PhotoViewer = (props) => {
 												<ViewerFlexWrapper
 																showContent={imageSource}
 																onMouseUp={stopDrag}
-																onMouseLeave={stopDrag}
+																onMouseEnter={shouldResumeDrag}
 																onMouseMove={(e) => onDrag(e, true)}
 																>
 																<ViewerSizeWrapper>
