@@ -13,15 +13,18 @@ const OriginalImage = (props) => {
 
 export default OriginalImage;
 
-const ImageWrapper = styled.div `
-    height: ${props => props.theme.imageMeasures.height}px;
-    width: ${props => `${props.theme.sliderPosition}px`};
-	position: absolute;
-    top: 0;
-    left: 0; 
-    overflow: hidden;
-    z-index: 1;
-`;
+const ImageWrapper = styled.span.attrs(props => ({
+    style: {
+        height: `${props.theme.imageMeasures.height}px`,
+        width: `${props.theme.sliderPosition}px`,
+        position: `absolute`,
+        top: 0,
+        left: 0,
+        overflow: `hidden`,
+        zIndex: 1
+    },
+  }))``;
+  
 const Image = styled.img `
     height: 100%;
 `;

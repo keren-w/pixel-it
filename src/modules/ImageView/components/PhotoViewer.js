@@ -21,13 +21,10 @@ const PhotoViewer = (props) => {
 								setSliderPosition] = useState(0);		
     			const [isMouseDown,
 								setIsMouseDown] = useState(false);
-				const [sliderContainerLeft,
-					 setSliderContainerLeft] = useState(0);
 								
 				useEffect(() => {
 								const {current} = canvasRef;
 								setCanvasElement(current);
-								setSliderContainerLeft(current.getBoundingClientRect().left)
 								canvasService.init(current);
 				}, [canvasRef]);
 

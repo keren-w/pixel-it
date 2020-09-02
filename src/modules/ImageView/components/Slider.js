@@ -23,15 +23,18 @@ const {onMouseDown, forwardRef} = props;
 
 export default Slider;
 
-const SliderWrapper = styled.span `
-    height: ${props => props.theme.imageMeasures.height}px;
-    width: ${SLIDER_ARROW_SIZE * 2}px;
-    position: absolute;
-    top: 0;
-    left: ${props => `${props.theme.sliderPosition-SLIDER_ARROW_SIZE}px`};
-    cursor: col-resize;
-    z-index: 2;
-`;
+const SliderWrapper = styled.span.attrs(props => ({
+    style: {
+        height: `${props.theme.imageMeasures.height}px`,
+        width: `${SLIDER_ARROW_SIZE * 2}px`,
+        position: `absolute`,
+        top: 0,
+        left: `${props.theme.sliderPosition-SLIDER_ARROW_SIZE}px`,
+        cursor:` col-resize`,
+        zIndex: 2
+    },
+  }))``;
+
 const Arrow = styled.span `
     height: ${SLIDER_ARROW_SIZE * 2}px;
     width: 100%;
