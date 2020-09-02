@@ -62,19 +62,13 @@ const PhotoViewer = (props) => {
 
 				const updateSilderPosition = e => {
 					const {movementX} = e;
-					const currentSliderLocation = sliderRef.current.getBoundingClientRect();
-					const currentsliderCenter = currentSliderLocation.left + currentSliderLocation.width/2;
-					
-								if (e.screenX) {
-													const x = currentsliderCenter + movementX - sliderContainerLeft;
-                                                    console.log("PhotoViewer -> x", x)
-				
-													if (x >= 0 && x <= theme.imageMeasures.width) {
-														setSliderPosition(x);
-													} else {
-														stopDrag(e);
-													}
-								}
+					const x = sliderPosition + movementX;
+
+					if (x >= 0 && x <= theme.imageMeasures.width) {
+						setSliderPosition(x);
+					} else {
+						stopDrag(e);
+					}
 				}
 				
 				const startDrag = (e) => {
