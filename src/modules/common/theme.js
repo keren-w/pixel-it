@@ -3,6 +3,7 @@ export const theme = {
         height: 0,
         width: 0
     },
+    transition: null,
     backgroundGradientLight: '#603675',
     backgroundGradientDark: '#0C070F',
     logoColor: '#A14ACB',

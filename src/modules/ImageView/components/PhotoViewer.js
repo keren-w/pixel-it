@@ -21,6 +21,8 @@ const PhotoViewer = (props) => {
 								setSliderPosition] = useState(0);		
     			const [isMouseDown,
 								setIsMouseDown] = useState(false);
+				const [transitionTimer, setTransitionTimer] = useState(null);
+				const transitionTime = 100;
 								
 				useEffect(() => {
 								const {current} = canvasRef;
@@ -57,15 +59,24 @@ const PhotoViewer = (props) => {
 								};
 				}
 
-				const updateSilderPosition = e => {
+				const updateSilderPosition = (e, transition) => {
 					const {movementX} = e;
 					const x = sliderPosition + movementX;
 
 					if (x >= 0 && x <= theme.imageMeasures.width) {
 						setSliderPosition(x);
+						transition && setSliderTransition(transition);
 					} else {
 						stopDrag(e);
 					}
+				}
+				
+				const setSliderTransition = (transition) => {
+					theme.transition = `width ${transitionTime}ms`;
+					setTransitionTimer(window.setTimeout(() => {
+						theme.transition = null;
+						setTransitionTimer(null); //TODO: take care of clearing transitionTimer on unmount
+					  }, transitionTime));
 				}
 				
 				const startDrag = (e) => {
@@ -83,9 +94,9 @@ const PhotoViewer = (props) => {
 					};
 				};
 
-				const onDrag = (e) => {
+				const onDrag = (e, transition) => {
 					if (isMouseDown) {
-						updateSilderPosition(e);
+						updateSilderPosition(e, transition);
 					}
 				};
 
@@ -97,7 +108,7 @@ const PhotoViewer = (props) => {
 																showContent={imageSource}
 																onMouseUp={stopDrag}
 																onMouseLeave={stopDrag}
-																onMouseMove={onDrag}
+																onMouseMove={(e) => onDrag(e, true)}
 																>
 																<ViewerSizeWrapper>
 																				{showSlider && <Slider onMouseDown={startDrag} forwardRef={sliderRef}/>}

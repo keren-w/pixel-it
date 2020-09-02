@@ -13,10 +13,12 @@ const OriginalImage = (props) => {
 
 export default OriginalImage;
 
-const ImageWrapper = styled.span.attrs(props => ({
+const ImageWrapper = styled.div.attrs(props => ({
+    id: props.id,
     style: {
         height: `${props.theme.imageMeasures.height}px`,
         width: `${props.theme.sliderPosition}px`,
+        transition: props.theme.transition,
         position: `absolute`,
         top: 0,
         left: 0,
