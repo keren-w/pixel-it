@@ -124,7 +124,7 @@ const PhotoViewer = (props) => {
 												{/* {showLoader && <Loader>loading...</Loader>} */}
 												<ImageTitleBar name={name} handleUploadRequest={handleUploadRequest}/>
 												<ViewerFlexWrapper
-																showContent={imageSource}
+																showContent={!showLoader}
 																onMouseUp={stopDrag}
 																onMouseEnter={shouldResumeDrag}
 																onMouseMove={(e) => onDrag(e, true)}
