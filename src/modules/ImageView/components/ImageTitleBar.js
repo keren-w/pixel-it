@@ -3,13 +3,13 @@ import styled from "styled-components";
 import uploadIcon from "../../../assets/images/upload-icon.svg";
 
 const ImageTitleBar = (props) => {
-const {name} = props;
+const {name, handleUploadRequest} = props;
     return (
         <Wrapper>
             <ActionWrapper>
                 <span>{name}</span>
             </ActionWrapper>
-            <ActionWrapper onClick={() => {}}>
+            <ActionWrapper onClick={handleUploadRequest}>
                 <img src={uploadIcon} alt={'Upload'}/>
                 <span>Upload</span>
             </ActionWrapper>

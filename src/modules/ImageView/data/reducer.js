@@ -10,6 +10,8 @@ export const file = (state = defaultState, action) => {
                 file: action.payload,
                 name: action.payload.name || defaultState.name
             }
+            case actions.HANDLE_UPLOAD_REQUEST:
+                return defaultState;
         default:
             return state;
     }

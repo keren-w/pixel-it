@@ -8,7 +8,7 @@ import {theme} from "../../common/theme";
 import ImageTitleBar from "./ImageTitleBar";
 
 const PhotoViewer = (props) => {
-				const {file, name, showSlider, renderConfig} = props;
+				const {file, name, showSlider, renderConfig, handleUploadRequest} = props;
 				const canvasRef = useRef(null);
 				const sliderRef = useRef(null);
 				const [canvasElement,
@@ -30,23 +30,33 @@ const PhotoViewer = (props) => {
 								canvasService.init(current);
 				}, [canvasRef]);
 
+
 				useEffect(() => {
-								if (file && canvasElement) {
-												setShowLoader(true);
-												createImageBitmap(file).then(bitmapImg => {
-																const {offsetHeight, offsetWidth} = canvasElement.parentElement;
-																const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
-																theme.imageMeasures = imageMeasures;
-																canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
-																getImageProps();
-												});
-								}
-				}, [file, renderConfig, canvasElement]);
+					theme.imageMeasures.width = theme.imageMeasures.height = null;
+					renderImage();
+				}, [file]);
+
+				useEffect(() => {
+					renderImage();
+				}, [renderConfig, canvasElement]);
 
 				useEffect(() => {
 								theme.sliderPosition = sliderPosition;
 				}, [sliderPosition]);
 
+				const renderImage = () => {
+					if (file && canvasElement) {
+						setShowLoader(true);
+						createImageBitmap(file).then(bitmapImg => {
+										const {offsetHeight, offsetWidth} = canvasElement.parentElement;
+										const imageMeasures = canvasService.getDisplayedImageSize(bitmapImg, offsetHeight, offsetWidth);
+										theme.imageMeasures = imageMeasures;
+										canvasService.renderImage(imageMeasures, bitmapImg, renderConfig);
+										getImageProps();
+						});
+					}
+				};
+				
 				const getImageProps = () => {
 								var reader = new FileReader();
 								reader.readAsDataURL(file);
@@ -112,7 +122,7 @@ const PhotoViewer = (props) => {
 				return (
 								<Wrapper>
 												{/* {showLoader && <Loader>loading...</Loader>} */}
-												<ImageTitleBar name={name}/>
+												<ImageTitleBar name={name} handleUploadRequest={handleUploadRequest}/>
 												<ViewerFlexWrapper
 																showContent={imageSource}
 																onMouseUp={stopDrag}

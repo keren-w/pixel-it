@@ -3,6 +3,7 @@ import PhotoViewer from './PhotoViewer';
 import {getPhotoName, getPhotoFile} from '../data/selectors';
 import {getRenderConfig} from '../../Pixelizer/data/selectors';
 import {getShowSlider} from '../../Pixelizer/data/computedSelectors';
+import {handleUploadRequest} from '../data/actions'
 
 const mapStateToProps = (state) => ({
     name: getPhotoName(state),
@@ -12,6 +13,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = ({
+    handleUploadRequest
 });
 
 const PhotoViewerContainer = connect(
