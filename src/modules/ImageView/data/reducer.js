@@ -2,7 +2,8 @@ import * as actions from './actions';
 
 const defaultState = {
     file: null,
-    name: ''
+    name: '',
+    hideUploaderButton: false
 }
 
 export const file = (state = defaultState, action) => {
@@ -12,6 +13,11 @@ export const file = (state = defaultState, action) => {
                 ...state,
                 file: action.payload,
                 name: action.payload.name || defaultState.name
+            }
+        case actions.HANDLE_UPLOAD_REQUEST:
+            return {
+                ...state,
+                hideUploaderButton: true
             }
         default:
             return state;

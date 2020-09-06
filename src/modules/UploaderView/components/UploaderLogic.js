@@ -2,7 +2,7 @@ import React, {useRef, useEffect} from 'react';
 import {getPhotoInputValidationResult} from "../data/validator";
 
 const Uploader = (props) => {
-	const {handlePhotoUpload, setShowToaster, hideUploaderButton} = props;
+	const {handlePhotoUpload, setShowToaster, hideUploaderButton} = props
 	const inputRef = useRef(null);
 
 	useEffect(() => {

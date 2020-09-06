@@ -14,6 +14,8 @@ const App = (props) => {
     displayViewer,
     displayUploader
   } = props;
+  console.log("App -> displayUploader", displayUploader)
+  console.log("App -> displayViewer", displayViewer)
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
@@ -30,7 +32,7 @@ export default App;
 
 const AppWrapper = styled.div `
     background: ${({theme}) => `transparent linear-gradient(201deg, ${theme.backgroundGradientLight} 0%, ${theme.backgroundGradientDark} 100%) 0% 0% no-repeat padding-box`};
-    height: calc(100vh - 17px);
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
