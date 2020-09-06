@@ -30,7 +30,6 @@ const PhotoViewer = (props) => {
 								canvasService.init(current);
 				}, [canvasRef]);
 
-
 				useEffect(() => {
 					theme.imageMeasures.width = theme.imageMeasures.height = null;
 					renderImage();
@@ -43,6 +42,13 @@ const PhotoViewer = (props) => {
 				useEffect(() => {
 								theme.sliderPosition = sliderPosition;
 				}, [sliderPosition]);
+
+				useEffect(() => {
+					return () => {
+						// Clean up timeout
+						window.clearTimeout(transitionTimer);
+					}
+				}, [transitionTimer]);
 
 				const renderImage = () => {
 					if (file && canvasElement) {
