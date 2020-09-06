@@ -14,8 +14,6 @@ const App = (props) => {
     displayViewer,
     displayUploader
   } = props;
-  console.log("App -> displayUploader", displayUploader)
-  console.log("App -> displayViewer", displayViewer)
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
