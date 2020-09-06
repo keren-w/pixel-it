@@ -1,38 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import {getPhotoInputValidationResult} from "../data/validator";
 import {ButtonWrapper} from "../../common/styles";
 import uploadSymbol from "../../../assets/images/upload.svg";
+import Uploader from "./UploaderLogic";
 
 const PhotoUploader = (props) => {
-				const {name} = props;
-				const checkInput = (e) => {
-								const {files, accept} = e.target;
-								const file = files.length > 0 && files[0];
-
-								const validationResult = getPhotoInputValidationResult(file, accept);
-								const {isValid, message} = validationResult;
-
-								if (!isValid) {
-												props.setShowToaster(message);
-												e.target.value = null; // nullify input so to revalidate onChange
-
-								} else if (file) {
-												props.handlePhotoUpload(file);
-								}
-				}
-
-				return (
+				const {name, hideUploaderButton} = props;
+				return ( hideUploaderButton ?
+					<Uploader {...props} /> :
 								<UploderWrapper>
 												<UploaderFrame>
 												<img src={uploadSymbol} alt={'Upload'}/>
 												<label htmlFor="file">Upload
-																<input
-																				className="user-file"
-																				id="photo-input"
-																				type="file"
-																				accept="image/jpeg"
-																				onInput={checkInput}/>
+																<Uploader {...props} />
 												</label>
 												{name && <FileName>{name}</FileName>}
 												</UploaderFrame>

@@ -1,6 +1,9 @@
 import * as actions from './actions';
 
-const defaultState = {file: null, name: ''}
+const defaultState = {
+    file: null,
+    name: ''
+}
 
 export const file = (state = defaultState, action) => {
     switch (action.type) {
@@ -10,8 +13,6 @@ export const file = (state = defaultState, action) => {
                 file: action.payload,
                 name: action.payload.name || defaultState.name
             }
-            case actions.HANDLE_UPLOAD_REQUEST:
-                return defaultState;
         default:
             return state;
     }

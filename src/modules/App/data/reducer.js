@@ -1,8 +1,11 @@
 import * as actions from "./actions";
+import * as ImageViewActions from "../../ImageView/data/actions";
 
 const defaultState = {
     showToaster: false,
-    toasterMessage: ''
+    toasterMessage: '',
+    displayUploader: true,
+    hideUploaderButton: false
 };
 
 export const appReducer = (state = defaultState, action) => {
@@ -19,6 +22,17 @@ export const appReducer = (state = defaultState, action) => {
                 ...state,
                 showToaster: false,
                 toasterMessage: ''
+            }
+        case ImageViewActions.HANDLE_PHOTO_UPLOADED:
+            return {
+                ...state,
+                displayUploader: false
+            }
+        case ImageViewActions.HANDLE_UPLOAD_REQUEST:
+            return {
+                ...state,
+                displayUploader: true,
+                hideUploaderButton: true
             }
         default:
             return state;
