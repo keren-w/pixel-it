@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
 
-const SLIDER_ARROW_SIZE = 10;
-const SLIDER_BORDER_SIZE = 1;
-const SLIDER_HYPOTENUSE = Math.sqrt(Math.pow(SLIDER_ARROW_SIZE * 2, 2) * 2);
-
 const Slider = (props) => {
     const {onMouseDown, forwardRef} = props;
     return (
