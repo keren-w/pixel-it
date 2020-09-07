@@ -26,29 +26,29 @@ export default Slider;
 const SliderWrapper = styled.span.attrs(props => ({
     style: {
         height: `${props.theme.imageMeasures.height}px`,
-        width: `${SLIDER_ARROW_SIZE * 2}px`,
+        width: `${props.theme.slider.arrowSize}px`,
         position: `absolute`,
         top: 0,
-        left: `${props.theme.sliderPosition-SLIDER_ARROW_SIZE}px`,
+        left: `${props.theme.sliderPosition-props.theme.slider.arrowSize/2}px`,
         cursor:` col-resize`,
         zIndex: 2
     },
   }))``;
 
 const Arrow = styled.span `
-    height: ${SLIDER_ARROW_SIZE * 2}px;
+    height: ${({theme}) => theme.slider.arrowSize}px;
     width: 100%;
-    border: ${SLIDER_BORDER_SIZE}px solid white;
+    border: ${({theme}) => theme.slider.borderSize}px solid white;
     position: absolute;
-    top: ${props => `${(props.theme.imageMeasures.height-SLIDER_HYPOTENUSE)/2 + SLIDER_HYPOTENUSE/2-SLIDER_ARROW_SIZE}px`}; /* offset between two elements*/
+    top: ${({theme}) => theme.imageMeasures.height/2-theme.slider.arrowSize/2}px; /* offset between two elements*/
     left: 0;
     transform: rotate(45deg);
 `;
 const TopSeperator = styled.div `
-    width: ${SLIDER_BORDER_SIZE}px;
+    width: ${({theme}) => theme.slider.borderSize}px;
     background-color: white;
-    height: ${props => `${(props.theme.imageMeasures.height-SLIDER_HYPOTENUSE)/2}px`};
-    left: ${SLIDER_ARROW_SIZE - SLIDER_BORDER_SIZE/2}px;
+    height: ${({theme}) => theme.imageMeasures.height/2-theme.slider.sliderHypotenuse/2}px;
+    left: ${({theme}) => theme.slider.separatorLeft}px;
     position: absolute;
     top: 0;
 `;
