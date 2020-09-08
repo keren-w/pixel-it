@@ -27,11 +27,6 @@ export const appReducer = (state = defaultState, action) => {
                 ...state,
                 displayUploader: false
             }
-            case ImageViewActions.HANDLE_UPLOAD_REQUEST:
-            return {
-                ...state,
-                displayUploader: true
-            }
         default:
             return state;
     }

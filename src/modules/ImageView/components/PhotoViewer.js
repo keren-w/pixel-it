@@ -8,7 +8,7 @@ import {theme} from "../../common/theme";
 import ImageTitleBar from "./ImageTitleBar";
 
 const PhotoViewer = (props) => {
-				const {file, name, showSlider, renderConfig, handleUploadRequest} = props;
+				const {file, name, showSlider, renderConfig} = props;
 				const canvasRef = useRef(null);
 				const sliderRef = useRef(null);
 				const [canvasElement,
@@ -127,7 +127,7 @@ const PhotoViewer = (props) => {
 
 				return (
 								<Wrapper>
-												<ImageTitleBar name={name} handleUploadRequest={handleUploadRequest}/>
+												<ImageTitleBar name={name}/>
 												{showLoader && <Loader>loading...</Loader>}
 												<ViewerFlexWrapper
 																showContent={!showLoader}

@@ -11,15 +11,13 @@ const App = (props) => {
     showToaster,
     toasterMessage,
     dismissToaster,
-    displayViewer,
     displayUploader
   } = props;
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
       <Header/>
-      {displayViewer && <PhotoViewer/>}
-      {displayUploader &&  <PhotoUploader/>}
+      {displayUploader ?  <PhotoUploader/> : <PhotoViewer/>}
       {showToaster && <Toaster message={toasterMessage} dismissToaster={dismissToaster}/>}
     </AppWrapper>
     </ThemeProvider>

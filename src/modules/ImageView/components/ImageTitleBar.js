@@ -1,17 +1,16 @@
 import React from 'react';
 import styled from "styled-components";
-import uploadIcon from "../../../assets/images/upload-icon.svg";
+import PhotoUploader from "../../UploaderView/components/PhotoUploaderContainer";
 
 const ImageTitleBar = (props) => {
-const {name, handleUploadRequest} = props;
+const {name} = props;
     return (
         <Wrapper>
             <ActionWrapper>
                 <span>{name}</span>
             </ActionWrapper>
-            <ActionWrapper onClick={handleUploadRequest}>
-                <img src={uploadIcon} alt={'Upload'}/>
-                <span>Upload</span>
+            <ActionWrapper>
+                <PhotoUploader hideUploaderButton={true}/>
             </ActionWrapper>
         </Wrapper>
     )
@@ -31,9 +30,7 @@ const ActionWrapper = styled.div `
     align-items: center; 
     height: 25px;
     font-size: 15px;
-    img {
-        height: 20px;
-    }
+    
     &:first-child {
         padding-right: 25px;
         border-right: 1px solid ${({theme}) => theme.logoColor};
@@ -43,9 +40,6 @@ const ActionWrapper = styled.div `
     }
     &:not(:first-child) {
         padding-left: 25px;
-        span {
-            margin-left: 10px;
-        }
     }
     ${({onClick}) => onClick ? `cursor: pointer;` : ``}
 `;

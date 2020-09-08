@@ -1,9 +1,9 @@
 import * as actions from './actions';
+import * as appActions from "../../App/data/actions";
 
 const defaultState = {
     file: null,
-    name: '',
-    hideUploaderButton: false
+    name: ''
 }
 
 export const file = (state = defaultState, action) => {
@@ -14,10 +14,9 @@ export const file = (state = defaultState, action) => {
                 file: action.payload,
                 name: action.payload.name || defaultState.name
             }
-        case actions.HANDLE_UPLOAD_REQUEST:
+        case appActions.DISMISS_TOASTER:
             return {
-                ...state,
-                hideUploaderButton: true
+                ...state
             }
         default:
             return state;
