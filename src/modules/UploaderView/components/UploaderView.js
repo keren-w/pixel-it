@@ -2,22 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import {ButtonWrapper} from "../../common/styles";
 import uploadSymbol from "../../../assets/images/upload.svg";
-import UploaderInput from "./UploaderInput";
 
 const PhotoUploader = (props) => {
-				const {name, hideUploaderButton} = props;
-				return ( hideUploaderButton ?
-					<UploaderInput {...props} /> :
-					<UploderWrapper>
-							<UploaderFrame>
-									<img src={uploadSymbol} alt={'Upload'}/>
-									<label htmlFor="file">Upload
-													<UploaderInput {...props} />
-									</label>
-									{name && <FileName>{name}</FileName>}
-							</UploaderFrame>
-					</UploderWrapper>
-				);
+		const {name, hideUploaderButton, children} = props;
+		return ( hideUploaderButton ?
+			children() :
+			<UploderWrapper>
+					<UploaderFrame>
+							<img src={uploadSymbol} alt={'Upload'}/>
+							<label htmlFor="file">Upload
+								{children()}
+							</label>
+							{name && <FileName>{name}</FileName>}
+					</UploaderFrame>
+			</UploderWrapper>
+		);
 }
 
 export default PhotoUploader;

@@ -2,9 +2,10 @@ import React, {useRef} from 'react';
 import styled from "styled-components";
 import uploadIcon from "../../../assets/images/upload-icon.svg";
 import {getPhotoInputValidationResult} from "../data/validator";
+import UploaderView from "./UploaderView";
 
 const UploaderInput = (props) => {
-	const {handlePhotoUpload, setShowToaster, hideUploaderButton} = props
+	const {name, handlePhotoUpload, setShowToaster, hideUploaderButton} = props
 	const inputRef = useRef(null);
 
 	const checkInput = (e) => {
@@ -31,16 +32,22 @@ const UploaderInput = (props) => {
 		onInput={checkInput}/>);
 			
 
-					return (
-						hideUploaderButton ? 
-							<ButtonlessWrapper> 
-								<img src={uploadIcon} alt={'Upload'}/>
-								<span>Upload</span>
-								{getUploaderInput()}
-							</ButtonlessWrapper>
-							:
-						getUploaderInput()
-						);
+		return (
+			<UploaderView name={name} hideUploaderButton={hideUploaderButton}>
+				{() => {
+						if (hideUploaderButton) {
+							return 	(
+								<ButtonlessWrapper> 
+									<img src={uploadIcon} alt={'Upload'}/>
+									<span>Upload</span>
+									{getUploaderInput()}
+								</ButtonlessWrapper>
+							)};
+						return getUploaderInput();
+					}
+				}
+			</UploaderView>
+		)
 }
 
 export default UploaderInput;

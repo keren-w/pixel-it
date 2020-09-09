@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import UploaderView from './UploaderView'
+import UploaderInput from "./UploaderInput";
 import {handlePhotoUpload} from "../../ImageView/data/actions";
 import {setShowToaster} from "../../App/data/actions";
 import {getPhotoName} from "../../ImageView/data/selectors";
@@ -17,7 +17,7 @@ const mapDispatchToProps = ({
 const PhotoUploaderContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(UploaderView);
+)(UploaderInput);
 
 export default PhotoUploaderContainer;
 
