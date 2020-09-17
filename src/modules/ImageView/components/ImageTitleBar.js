@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import PhotoUploader from "../../UploaderView/components/PhotoUploaderContainer";
+import PhotoUploader from "../../PhotoUploader/components/PhotoUploaderContainer";
 
 const ImageTitleBar = (props) => {
 const {name} = props;

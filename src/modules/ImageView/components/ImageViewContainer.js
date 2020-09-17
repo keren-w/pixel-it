@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import PhotoViewer from './PhotoViewer';
+import ImageViewWrapper from './ImageViewWrapper';
 import {getPhotoName, getPhotoFile} from '../data/selectors';
 import {getRenderConfig} from '../../Pixelizer/data/selectors';
 import {getShowSlider} from '../../Pixelizer/data/computedSelectors';
@@ -17,7 +17,7 @@ const mapDispatchToProps = ({
 const PhotoViewerContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(PhotoViewer);
+)(ImageViewWrapper);
 
 export default PhotoViewerContainer;
 

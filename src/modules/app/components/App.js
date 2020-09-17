@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, {ThemeProvider} from "styled-components";
 import Header from "../../Header/Header";
-import PhotoUploader from "../../UploaderView/components/PhotoUploaderContainer";
-import PhotoViewer from "../../ImageView/components/PhotoViewerContainer";
+import UploaderView from "../../PhotoUploader/components/PhotoUploaderContainer";
+import ImageView from "../../ImageView/components/ImageViewContainer";
 import {Toaster} from "./Toaster";
 import {theme} from "../../common/theme";
 
@@ -17,7 +17,7 @@ const App = (props) => {
     <ThemeProvider theme={theme}>
       <AppWrapper>
       <Header/>
-      {displayUploader ?  <PhotoUploader/> : <PhotoViewer/>}
+      {displayUploader ?  <UploaderView/> : <ImageView/>}
       {showToaster && <Toaster message={toasterMessage} dismissToaster={dismissToaster}/>}
     </AppWrapper>
     </ThemeProvider>

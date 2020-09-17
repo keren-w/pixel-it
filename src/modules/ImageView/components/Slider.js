@@ -2,13 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 
 const Slider = (props) => {
-    const {onMouseDown, forwardRef} = props;
+    const {onMouseDown} = props;
     return (
         <SliderWrapper
             draggable
             onDragStart={e => e.preventDefault()}
             onMouseDown={onMouseDown}
-            ref={forwardRef}
            >
             <TopSeperator/>
             <Arrow/>
