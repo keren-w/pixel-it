@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, useCallback} from 'react';
 import styled from "styled-components";
 import Pixelizer from "../../Pixelizer/components/PixelizerContainer";
 import OriginalImage from "./OriginalImage";
@@ -33,11 +33,11 @@ const PhotoViewer = (props) => {
 				useEffect(() => {
 					theme.imageMeasures.width = theme.imageMeasures.height = null;
 					renderImage();
-				}, [file]);
+				}, [file, renderImage]);
 
 				useEffect(() => {
 					renderImage();
-				}, [renderConfig, canvasElement]);
+				}, [renderConfig, canvasElement, renderImage]);
 
 				useEffect(() => {
 								theme.sliderPosition = sliderPosition;
@@ -50,7 +50,7 @@ const PhotoViewer = (props) => {
 					}
 				}, [transitionTimer]);
 
-				const renderImage = () => {
+				const renderImage = useCallback(() => {
 					if (file && canvasElement) {
 						setShowLoader(true);
 						createImageBitmap(file).then(bitmapImg => {
@@ -61,9 +61,9 @@ const PhotoViewer = (props) => {
 										getImageProps();
 						});
 					}
-				};
+				}, [canvasElement, file, getImageProps, renderConfig]);
 				
-				const getImageProps = () => {
+				const getImageProps = useCallback(() => {
 								var reader = new FileReader();
 								reader.readAsDataURL(file);
 								reader.onload = e => {
@@ -73,7 +73,7 @@ const PhotoViewer = (props) => {
 												}
 												setShowLoader(false);
 								};
-				}
+				}, [file, imageSource]);
 
 				const updateSilderPosition = (e, transition) => {
 					const currentX = e.pageX - canvasElement.getBoundingClientRect().left;
