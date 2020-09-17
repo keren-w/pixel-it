@@ -20,9 +20,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app",
+    "extends": ["react-app"], 
     "rules": {
-      "no-use-before-define": ["off", { "functions": true, "classes": true }]
+      "no-use-before-define": "off"
     }
   },
   "browserslist": [

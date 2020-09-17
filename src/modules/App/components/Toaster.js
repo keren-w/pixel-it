@@ -7,7 +7,7 @@ export const Toaster = (props) => {
     useEffect(() => {
         window.alert(message);
         dismissToaster();
-    }, [message]);
+    }, [message, dismissToaster]);
 
     return (
         <Backdrop/>
