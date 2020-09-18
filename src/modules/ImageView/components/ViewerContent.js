@@ -85,10 +85,12 @@ const ViewerContent = (props) => {
         <ViewerWrapper
             showContent={!showLoader}
             onMouseUp={stopDrag}
+            onTouchEnd={stopDrag}
             onMouseEnter={shouldResumeDrag}
-            onMouseMove={(e) => onDrag(e, true)}>
+            onMouseMove={(e) => onDrag(e, true)}
+            onTouchMove={(e) => onDrag(e, true)}>
             <ViewerSizeWrapper>
-                {showSlider && <Slider onMouseDown={startDrag}/>}
+                {showSlider && <Slider onMouseDown={startDrag} onTouchStart={startDrag}/>}
                 <OriginalImage src={imageSource}/>
                 <canvas ref={forwardRef} id={'pixelized-output'}/>
             </ViewerSizeWrapper>
